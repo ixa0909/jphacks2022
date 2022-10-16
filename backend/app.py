@@ -26,14 +26,14 @@ mysql = MySQL(app)
 def CONNECT_DB():
     CS = mysql.connection.cursor()
     # CS.execute('''CREATE TABLE TABLE_NAME (id INTEGER, name VARCHAR(20))''')
-    CS.execute('''INSERT INTO TABLE_NAME VALUES (1, 'Harry')''')
-    CS.execute('''INSERT INTO TABLE_NAME VALUES (2, 'Arthor')''')
+    CS.execute('''INSERT INTO store VALUES (1, 'くら寿司')''')
+    CS.execute('''INSERT INTO store VALUES (2, 'いきなりステーキ')''')
     mysql.connection.commit()
 
-    CS.execute('''SELECT * FROM TABLE_NAME''')
+    CS.execute('''SELECT * FROM store''')
     Executed_DATA = CS.fetchall()
-    print(Executed_DATA)
-    return str(Executed_DATA[1]['name'])
+    print()
+    return jsonify(Executed_DATA)
 
 if __name__ == '__main__':
     app.debug = True
