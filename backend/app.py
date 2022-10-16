@@ -1,13 +1,21 @@
 # -*- coding: utf-8 -*-
 from flask import Flask,jsonify
 from flask_mysqldb import MySQL
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv(override=True)
+PASSWORD = os.getenv('DATABASE_PASSWORD')
+
+
 
 app = Flask(__name__)
 
 # 日本語を使えるように
 app.config['JSON_AS_ASCII'] = False
 app.config['MYSQL_USER'] = 'night'
-app.config['MYSQL_PASSWORD'] = '2k#TE,[PK'
+app.config['MYSQL_PASSWORD'] = PASSWORD
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_DB'] = 'test'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
