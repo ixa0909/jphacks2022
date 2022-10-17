@@ -22,9 +22,9 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
 @app.route('/')
-def CONNECT_DB():
+def CONNECT_DB_STORE():
     CS = mysql.connection.cursor()
-    CS.execute('''INSERT INTO store(name) VALUES ('くら寿司')''')
+    # CS.execute('''INSERT INTO store(name) VALUES ('くら寿司')''')
     mysql.connection.commit()
 
     CS.execute('''SELECT * FROM store''')
@@ -32,6 +32,18 @@ def CONNECT_DB():
     print()
     return jsonify(Executed_DATA)
 
+@app.route('/login/')
+def CONNECT_DB_USER():
+    # フロントからデータを受け取って挿入と照合したい
+    CS = mysql.connection.cursor()
+    # CS.execute('''INSERT INTO store(name) VALUES ('くら寿司')''')
+    mysql.connection.commit()
+
+    CS.execute('''SELECT * FROM user''')
+    Executed_DATA = CS.fetchall()
+    print()
+    return jsonify(Executed_DATA)
+
 if __name__ == '__main__':
     app.debug = True
-    app.run()
+    app.run(port=8080)
