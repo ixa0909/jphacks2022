@@ -5,10 +5,9 @@ from dotenv import load_dotenv
 import os
 
 
+# データベースログインの PASS を取得
 load_dotenv(override=True)
 PASSWORD = os.getenv('DATABASE_PASSWORD')
-
-
 
 app = Flask(__name__)
 
@@ -25,9 +24,7 @@ mysql = MySQL(app)
 @app.route('/')
 def CONNECT_DB():
     CS = mysql.connection.cursor()
-    # CS.execute('''CREATE TABLE TABLE_NAME (id INTEGER, name VARCHAR(20))''')
-    CS.execute('''INSERT INTO store VALUES (1, 'くら寿司')''')
-    CS.execute('''INSERT INTO store VALUES (2, 'いきなりステーキ')''')
+    CS.execute('''INSERT INTO store(name) VALUES ('くら寿司')''')
     mysql.connection.commit()
 
     CS.execute('''SELECT * FROM store''')
@@ -37,4 +34,4 @@ def CONNECT_DB():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='127.0.0.1', port=8080)
+    app.run()

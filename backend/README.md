@@ -3,4 +3,5 @@
 - Python 3.10.7
 ### ライブラリ一覧
 - flask 
+- traceback 
   
