@@ -4,7 +4,6 @@ from flask_mysqldb import MySQL
 from dotenv import load_dotenv
 import os
 
-
 # データベースログインの PASS を取得
 load_dotenv(override=True)
 PASSWORD = os.getenv('DATABASE_PASSWORD')
@@ -24,7 +23,7 @@ mysql = MySQL(app)
 @app.route('/')
 def CONNECT_DB_STORE():
     CS = mysql.connection.cursor()
-    # CS.execute('''INSERT INTO store(name) VALUES ('くら寿司')''')
+    CS.execute("INSERT INTO store(name) VALUES ('くら寿司')")
     mysql.connection.commit()
 
     CS.execute('''SELECT * FROM store''')
@@ -36,8 +35,8 @@ def CONNECT_DB_STORE():
 def CONNECT_DB_USER():
     # フロントからデータを受け取って挿入と照合したい
     CS = mysql.connection.cursor()
-    # CS.execute('''INSERT INTO store(name) VALUES ('くら寿司')''')
-    mysql.connection.commit()
+    # CS.execute("INSERT INTO store(name) VALUES ('くら寿司')")
+    # mysql.connection.commit()
 
     CS.execute('''SELECT * FROM user''')
     Executed_DATA = CS.fetchall()

@@ -21,12 +21,14 @@ def insert_to_db(datas,table,column):
     for data in datas:
         # try 可能なら　except 失敗したなら
         try:
-            cursor.execute("""INSERT INTO """+table+column+""" VALUES (\'"""+data+"""\')""")
+            
+            sql = """INSERT INTO %s %s VALUES (\'%s\')"""
+            cursor.execute(sql % (table, column, data))
             # 保存を実行
             connection.commit()
         except:
             # エラーメッセージを出力
-            # print(traceback.format_exc())
+            print(traceback.format_exc())
             pass# 何もしない
         
     # 接続を閉じる
@@ -36,6 +38,8 @@ def insert_to_db(datas,table,column):
 datas = ['ワンカルビ', 'じゅうじゅうカルビ', 'いろり庵きらく', 'やっぱりステーキ', 'つばめグリル', '牛繁', '吉野家', '一風堂', 'お好み焼ゆかり', 
             '餃子の王将', 'かっぱ寿司', 'や台やグループ', 'とんかつ新宿さぼてん', 'そじ坊', 'まいどおおきに食堂', 'いきなり！ステーキ', 'たこ八', 'フライングガーデン', 
             'とんかつ和幸', '三田屋本店', 'ほっかほっか亭']
+
+datas = "1. or "
 # TABLE
 table = "store"
 # COLUMN
