@@ -23,10 +23,10 @@ mysql = MySQL(app)
 @app.route('/')
 def CONNECT_DB_STORE():
     CS = mysql.connection.cursor()
-    CS.execute("INSERT INTO store(name) VALUES ('くら寿司')")
-    mysql.connection.commit()
+    # CS.execute("INSERT INTO stores(name,image_url) VALUES ('くら寿司','avbaaba')")
+    # mysql.connection.commit()
 
-    CS.execute('''SELECT * FROM store''')
+    CS.execute('''SELECT * FROM stores''')
     Executed_DATA = CS.fetchall()
     print()
     return jsonify(Executed_DATA)
@@ -38,9 +38,9 @@ def CONNECT_DB_USER():
     # CS.execute("INSERT INTO store(name) VALUES ('くら寿司')")
     # mysql.connection.commit()
 
-    CS.execute('''SELECT * FROM user''')
+    CS.execute('''SELECT * FROM stores''')
     Executed_DATA = CS.fetchall()
-    print()
+    
     return jsonify(Executed_DATA)
 
 if __name__ == '__main__':
