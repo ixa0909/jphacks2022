@@ -39,29 +39,28 @@ def CONNECT_DB_USER():
         return "新規です"
 
 # 店一覧を表示
-@app.route('/stores')
+@app.route('/stores',methods=["GET", "POST"])
 def get_stores():
-    
-    cs = mysql.connection.cursor()
-    cs.execute("SELECT * FROM stores")
-    data = cs.fetchall()
+    if request.method == "GET":
+        cs = mysql.connection.cursor()
+        cs.execute("SELECT * FROM stores")
+        data = cs.fetchall()
 
-    return jsonify(data)
-
-# 来店履歴に登録
-@app.route('/come_history',methods=["POST"])
-def add_come_history():
-    try:
-        user_id = request.form["user_id"]
-        store_id = request.form["store_id"]
-    except:
-        return 0
+        return jsonify(data)
         
-    cs = mysql.connection.cursor()
-    cs.execute("insert into come_history(user_id,store_id) values("+user_id+","+store_id+")")
-    mysql.connection.commit()
+    else: # request.method == "POST" を想定
+    # 来店履歴に登録
+        try:
+            user_id = request.form["user_id"]
+            store_id = request.form["store_id"]
+        except:
+            return "0"
+            
+        cs = mysql.connection.cursor()
+        cs.execute("insert into come_history(user_id,store_id) values("+user_id+","+store_id+")")
+        mysql.connection.commit()
 
-    return 0
+        return "0"
 
 
 # メニュー一覧を store_id に応じて返す
