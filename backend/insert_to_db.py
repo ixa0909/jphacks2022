@@ -22,7 +22,7 @@ def insert_to_db(datas,table,column):
         # try 可能なら　except 失敗したなら
         try:
             
-            sql = """INSERT INTO %s %s VALUES (\'%s\')"""
+            sql = "INSERT INTO %s %s VALUES (\'%s\','bnakbna')"
             cursor.execute(sql % (table, column, data))
             # 保存を実行
             connection.commit()
@@ -39,10 +39,9 @@ datas = ['ワンカルビ', 'じゅうじゅうカルビ', 'いろり庵きら�
             '餃子の王将', 'かっぱ寿司', 'や台やグループ', 'とんかつ新宿さぼてん', 'そじ坊', 'まいどおおきに食堂', 'いきなり！ステーキ', 'たこ八', 'フライングガーデン', 
             'とんかつ和幸', '三田屋本店', 'ほっかほっか亭']
 
-datas = "1. or "
 # TABLE
-table = "store"
+table = "stores"
 # COLUMN
-column = "(name)"
+column = "(name,image_url)"
 
 insert_to_db(datas,table,column)

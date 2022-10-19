@@ -26,22 +26,26 @@ def CONNECT_DB_STORE():
     # CS.execute("INSERT INTO stores(name,image_url) VALUES ('くら寿司','avbaaba')")
     # mysql.connection.commit()
 
-    CS.execute('''SELECT * FROM stores''')
-    Executed_DATA = CS.fetchall()
+    CS.execute("SELECT * FROM stores")
+    data = CS.fetchall()
     print()
-    return jsonify(Executed_DATA)
+    return jsonify(data)
 
-@app.route('/login/')
+@app.route('/login/',methods=['POST'])
 def CONNECT_DB_USER():
+    a = request.form["user"]
+    print(a)
     # フロントからデータを受け取って挿入と照合したい
     CS = mysql.connection.cursor()
-    # CS.execute("INSERT INTO store(name) VALUES ('くら寿司')")
+    # CS.execute("INSERT INTO stores(name) VALUES ('くら寿司')")
     # mysql.connection.commit()
 
-    CS.execute('''SELECT * FROM stores''')
-    Executed_DATA = CS.fetchall()
-    
-    return jsonify(Executed_DATA)
+    CS.execute("SELECT id FROM users where id = '1'")
+    data = CS.fetchall()
+    if len(data):
+        return jsonify(data)
+    else:
+        return "新規です"
 
 if __name__ == '__main__':
     app.debug = True
