@@ -21,8 +21,9 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
-@app.route('/')
-def stores():
+# 店一覧を表示
+@app.route('/stores')
+def get_stores():
     CS = mysql.connection.cursor()
     # CS.execute("INSERT INTO stores(name,image_url) VALUES ('くら寿司','avbaaba')")
     # mysql.connection.commit()
@@ -31,10 +32,42 @@ def stores():
     data = CS.fetchall()
     return jsonify(data)
 
+# 来店履歴に登録
+@app.route('/come_history',methods=["POST"])
+def add_come_history():
+    try:
+        user_id = request.form["user_id"]
+        store_id = request.form["store_id"]
+    except:
+        return 0
+        
+    CS = mysql.connection.cursor()
+    CS.execute("insert into come_history(user_id,store_id) values("+user_id+","+store_id+")")
+
+    mysql.connection.commit()
+    return 0
+
+# 注文履歴に登録
+@app.route('/order_history',methods=["POST"])
+def add_order_history():
+    try:
+        user_id = request.form["user_id"]
+        menu_id = request.form["menu_id"]
+    except:
+        return 400
+
+    CS = mysql.connection.cursor()
+    CS.execute("insert into come_history(user_id,store_id) values("+user_id+","+menu_id+")")
+
+    mysql.connection.commit()
+    return 400
+
 # メニュー一覧を store_id に応じて返す
-@app.route('/menues',methods=["POST"])
+@app.route('/menues',methods=["GET"])
 def menues():
-    store_id = request.form["store_id"]
+    req = request.args
+    store_id = req.get("store_id")
+
     CS = mysql.connection.cursor()
     # mysql.connection.commit()
 
@@ -42,6 +75,7 @@ def menues():
     data = CS.fetchall()
     return jsonify(data)
 
+# ログイン処理
 @app.route('/login/',methods=['POST'])
 def CONNECT_DB_USER():
     user = request.form["user"]
