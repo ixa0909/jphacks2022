@@ -65,38 +65,36 @@ def add_come_history():
 
 
 # メニュー一覧を store_id に応じて返す
-@app.route('/menues',methods=["GET"])
+@app.route('/menues',methods=["GET","POST"])
 def menues():
-    req = request.args
-    store_id = req.get("store_id")
+    if request.method == "GET":
+        req = request.args
+        store_id = req.get("store_id")
 
-    cs = mysql.connection.cursor()
-    cs.execute("SELECT * FROM menues where store_id="+store_id)
-    menues = cs.fetchall()
-    # print(menues)
-    
-    cs.execute("SELECT * FROM menues where recommend=true and store_id="+store_id)
-    recommend = cs.fetchall()
-    # print(recommend)
+        cs = mysql.connection.cursor()
+        cs.execute("SELECT * FROM menues where store_id="+store_id)
+        menues = cs.fetchall()
+        # print(menues)
+        
+        cs.execute("SELECT * FROM menues where recommend=true and store_id="+store_id)
+        recommend = cs.fetchall()
+        # print(recommend)
 
-    # おすすめはメニューとで重複して渡している
-    return jsonify(recommend+menues)#,jsonify(recommend)
+        # おすすめはメニューとで重複して渡している
+        return jsonify(recommend+menues)#,jsonify(recommend)
+    else: # request.method == "GET" を想定
+        try:
+            user_id = request.form["user_id"]
+            menu_id = request.form["menu_id"]
+        except: 
+            return "0"
 
-# 注文履歴に登録
-@app.route('/order_history',methods=["POST"])
-def add_order_history():
-    try:
-        user_id = request.form["user_id"]
-        menu_id = request.form["menu_id"]
-    except:
+        cs = mysql.connection.cursor()
+        cs.execute("insert into come_history(user_id,store_id) values("+user_id+","+menu_id+")")
+        mysql.connection.commit()
+        
+        # 完了に応じた番号（値）を戻り値にする
         return "0"
-
-    cs = mysql.connection.cursor()
-    cs.execute("insert into come_history(user_id,store_id) values("+user_id+","+menu_id+")")
-    mysql.connection.commit()
-    
-    # エラーに応じた番号（値）を戻り値にする
-    return "0"
 
 # 達成度を表示(コンプリート画面)
 @app.route('/check_complete',methods=["POST"])
