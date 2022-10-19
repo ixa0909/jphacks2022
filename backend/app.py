@@ -21,15 +21,29 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
+# ログイン処理
+@app.route('/login/',methods=['POST'])
+def CONNECT_DB_USER():
+    user = request.form["user"]
+    # print(user)
+    # フロントからデータを受け取って挿入と照合したい
+    CS = mysql.connection.cursor()
+
+    CS.execute("SELECT id FROM users where id = '1'")
+    data = CS.fetchall()
+    if len(data):
+        return jsonify(data)
+    else:
+        return "新規です"
+
 # 店一覧を表示
 @app.route('/stores')
 def get_stores():
+    
     CS = mysql.connection.cursor()
-    # CS.execute("INSERT INTO stores(name,image_url) VALUES ('くら寿司','avbaaba')")
-    # mysql.connection.commit()
-
     CS.execute("SELECT * FROM stores")
     data = CS.fetchall()
+
     return jsonify(data)
 
 # 来店履歴に登録
@@ -43,8 +57,8 @@ def add_come_history():
         
     CS = mysql.connection.cursor()
     CS.execute("insert into come_history(user_id,store_id) values("+user_id+","+store_id+")")
-
     mysql.connection.commit()
+
     return 0
 
 # 注文履歴に登録
@@ -54,13 +68,13 @@ def add_order_history():
         user_id = request.form["user_id"]
         menu_id = request.form["menu_id"]
     except:
-        return 400
+        return 0
 
     CS = mysql.connection.cursor()
     CS.execute("insert into come_history(user_id,store_id) values("+user_id+","+menu_id+")")
-
     mysql.connection.commit()
-    return 400
+    # エラーに応じた番号（値）を戻り値にする
+    return 0
 
 # メニュー一覧を store_id に応じて返す
 @app.route('/menues',methods=["GET"])
@@ -69,7 +83,6 @@ def menues():
     store_id = req.get("store_id")
 
     CS = mysql.connection.cursor()
-
     CS.execute("SELECT * FROM menues where store_id="+store_id)
     menues = CS.fetchall()
     # print(menues)
@@ -77,27 +90,11 @@ def menues():
     CS.execute("SELECT * FROM menues where recommend=true and store_id="+store_id)
     recommend = CS.fetchall()
     # print(recommend)
+
     # おすすめはメニューとで重複して渡している
     return jsonify(recommend+menues)#,jsonify(recommend)
 
     
-
-# ログイン処理
-@app.route('/login/',methods=['POST'])
-def CONNECT_DB_USER():
-    user = request.form["user"]
-    # print(user)
-    # フロントからデータを受け取って挿入と照合したい
-    CS = mysql.connection.cursor()
-    # CS.execute("INSERT INTO stores(name) VALUES ('くら寿司')")
-    # mysql.connection.commit()
-
-    CS.execute("SELECT id FROM users where id = '1'")
-    data = CS.fetchall()
-    if len(data):
-        return jsonify(data)
-    else:
-        return "新規です"
 
 if __name__ == '__main__':
     app.debug = True
