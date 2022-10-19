@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from ast import Store
 from crypt import methods
 from flask import *
 from flask_mysqldb import MySQL
@@ -27,10 +28,10 @@ def CONNECT_DB_USER():
     user = request.form["user"]
     # print(user)
     # フロントからデータを受け取って挿入と照合したい
-    CS = mysql.connection.cursor()
+    cs = mysql.connection.cursor()
 
-    CS.execute("SELECT id FROM users where id = '1'")
-    data = CS.fetchall()
+    cs.execute("SELECT id FROM users where id = '1'")
+    data = cs.fetchall()
     if len(data):
         return jsonify(data)
     else:
@@ -40,9 +41,9 @@ def CONNECT_DB_USER():
 @app.route('/stores')
 def get_stores():
     
-    CS = mysql.connection.cursor()
-    CS.execute("SELECT * FROM stores")
-    data = CS.fetchall()
+    cs = mysql.connection.cursor()
+    cs.execute("SELECT * FROM stores")
+    data = cs.fetchall()
 
     return jsonify(data)
 
@@ -55,11 +56,30 @@ def add_come_history():
     except:
         return 0
         
-    CS = mysql.connection.cursor()
-    CS.execute("insert into come_history(user_id,store_id) values("+user_id+","+store_id+")")
+    cs = mysql.connection.cursor()
+    cs.execute("insert into come_history(user_id,store_id) values("+user_id+","+store_id+")")
     mysql.connection.commit()
 
     return 0
+
+
+# メニュー一覧を store_id に応じて返す
+@app.route('/menues',methods=["GET"])
+def menues():
+    req = request.args
+    store_id = req.get("store_id")
+
+    cs = mysql.connection.cursor()
+    cs.execute("SELECT * FROM menues where store_id="+store_id)
+    menues = cs.fetchall()
+    # print(menues)
+    
+    cs.execute("SELECT * FROM menues where recommend=true and store_id="+store_id)
+    recommend = cs.fetchall()
+    # print(recommend)
+
+    # おすすめはメニューとで重複して渡している
+    return jsonify(recommend+menues)#,jsonify(recommend)
 
 # 注文履歴に登録
 @app.route('/order_history',methods=["POST"])
@@ -68,32 +88,41 @@ def add_order_history():
         user_id = request.form["user_id"]
         menu_id = request.form["menu_id"]
     except:
-        return 0
+        return "0"
 
-    CS = mysql.connection.cursor()
-    CS.execute("insert into come_history(user_id,store_id) values("+user_id+","+menu_id+")")
+    cs = mysql.connection.cursor()
+    cs.execute("insert into come_history(user_id,store_id) values("+user_id+","+menu_id+")")
     mysql.connection.commit()
-    # エラーに応じた番号（値）を戻り値にする
-    return 0
-
-# メニュー一覧を store_id に応じて返す
-@app.route('/menues',methods=["GET"])
-def menues():
-    req = request.args
-    store_id = req.get("store_id")
-
-    CS = mysql.connection.cursor()
-    CS.execute("SELECT * FROM menues where store_id="+store_id)
-    menues = CS.fetchall()
-    # print(menues)
     
-    CS.execute("SELECT * FROM menues where recommend=true and store_id="+store_id)
-    recommend = CS.fetchall()
-    # print(recommend)
+    # エラーに応じた番号（値）を戻り値にする
+    return "0"
 
-    # おすすめはメニューとで重複して渡している
-    return jsonify(recommend+menues)#,jsonify(recommend)
+# 達成度を表示(コンプリート画面)
+@app.route('/check_complete',methods=["POST"])
+def check_complete():
+    try:
+        user_id = request.form["user_id"]
+        store_id = request.form["store_id"]
+    except:
+        return "0"
 
+    cs = mysql.connection.cursor()
+    # mysql における差分集合
+    # https://qiita.com/Hiraku/items/71873bf31e503eb1b4e1
+    cs.execute("select count(id) from (select menues.id from menues where store_id = "+store_id+\
+                " and menues.id not in (\
+                  select menu_id from order_history where user_id = "+user_id+")) as not_complete")
+
+    # cs.execute("select id from menues where store_id = "+store_id)
+    # cs.execute("select menu_id from order_history where user_id = "+user_id)
+    check = cs.fetchall()
+    return jsonify(check)
+    if check:
+        # 制覇率を渡す
+        return "60%"
+    else:
+        return "全てのメニューを制覇しました！"
+    
     
 
 if __name__ == '__main__':
