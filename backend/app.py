@@ -80,7 +80,7 @@ def menues():
         # print(recommend)
 
         # おすすめはメニューとで重複して渡している
-        return jsonify(recommend+menues)#,jsonify(recommend)
+        return jsonify({"recommend":recommend,"menues":menues})
     else: # request.method == "GET" を想定
         try:
             user_id = request.form["user_id"]
@@ -111,7 +111,7 @@ def check_complete():
     #     cs.execute("insert into order_history (user_id, menu_id,store_id) values ('1',"+str(i)+",'1')")
     # mysql.connection.commit()
 
-    # mysql における差分集合
+    # mysql における差分集合 ↓store_id を order_history に加えたので変更した方が良さそう
     # https://qiita.com/Hiraku/items/71873bf31e503eb1b4e1
     cs.execute("select count(id) from (select menues.id from menues where store_id = "+store_id+\
                 " and menues.id not in (\
@@ -150,7 +150,7 @@ def get_history():
     order_history = cs.fetchall()
     return jsonify({"store_history":store_history,"order_history":order_history})
         
-        
+
 if __name__ == '__main__':
     app.debug = True
     app.run(port=8080)
