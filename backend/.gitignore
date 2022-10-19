@@ -1,4 +1,3 @@
-.env
-git_push.sh
-get_app_details.sh
-.gitignore
+ignore_file/.env
+ignore_file/git_push.sh
+ignore_file/get_app_details.sh
