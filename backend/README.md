@@ -8,3 +8,4 @@ python -m pip install -r requirements.txt
 ```
 - flask  
 - flask_mysqldb
+- dotenv

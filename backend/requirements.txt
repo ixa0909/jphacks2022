@@ -1,3 +1,4 @@
 # 標準ライブラリに属しておらずインストールが必要なライブラリ
 flask
 flask_mysqldb
+dotenv
