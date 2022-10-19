@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from crypt import methods
 from flask import *
 from flask_mysqldb import MySQL
 from dotenv import load_dotenv
@@ -21,14 +22,23 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
 @app.route('/')
-def CONNECT_DB_STORE():
+def stores():
     CS = mysql.connection.cursor()
     # CS.execute("INSERT INTO stores(name,image_url) VALUES ('くら寿司','avbaaba')")
     # mysql.connection.commit()
 
     CS.execute("SELECT * FROM stores")
     data = CS.fetchall()
-    print()
+    return jsonify(data)
+
+@app.route('/menues',methods=["GET"])
+def menues():
+    CS = mysql.connection.cursor()
+    # CS.execute("INSERT INTO stores(name,image_url) VALUES ('くら寿司','avbaaba')")
+    # mysql.connection.commit()
+
+    CS.execute("SELECT * FROM menues where store_id=1")
+    data = CS.fetchall()
     return jsonify(data)
 
 @app.route('/login/',methods=['POST'])
