@@ -1,2 +1,4 @@
 .env
 git_push.sh
+get_app_details.sh
+.gitignore

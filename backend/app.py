@@ -1,27 +1,27 @@
 # -*- coding: utf-8 -*-
 
 from flask import *
-
 from db_access import db_access
-
 
 app = Flask(__name__)
 # データベースへのアクセスを認証
 mysql = db_access(app)
 
 # ログイン処理
-@app.route('/login/',methods=['POST'])
+@app.route('/login',methods=['POST'])
 def CONNECT_DB_USER():
-    user = request.form["user"]
+    user_id = request.form["user_id"]
     # print(user)
     # フロントからデータを受け取って挿入と照合したい
     cs = mysql.connection.cursor()
 
-    cs.execute("SELECT id FROM users where id = '1'")
+    cs.execute("SELECT id FROM users where id = %s"%user_id)
     data = cs.fetchall()
     if len(data):
-        return jsonify(data)
+        return "既存です"
     else:
+        cs.execute("insert into users (id) values (\'%s\')"%user_id)
+        mysql.connection.commit()
         return "新規です"
 
 # 店一覧を表示
