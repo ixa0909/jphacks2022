@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask,jsonify
+from flask import *
 from flask_mysqldb import MySQL
 from dotenv import load_dotenv
 import os
