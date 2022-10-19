@@ -69,11 +69,18 @@ def menues():
     store_id = req.get("store_id")
 
     CS = mysql.connection.cursor()
-    # mysql.connection.commit()
 
     CS.execute("SELECT * FROM menues where store_id="+store_id)
-    data = CS.fetchall()
-    return jsonify(data)
+    menues = CS.fetchall()
+    # print(menues)
+    
+    CS.execute("SELECT * FROM menues where recommend=true and store_id="+store_id)
+    recommend = CS.fetchall()
+    # print(recommend)
+    # おすすめはメニューとで重複して渡している
+    return jsonify(recommend+menues)#,jsonify(recommend)
+
+    
 
 # ログイン処理
 @app.route('/login/',methods=['POST'])
