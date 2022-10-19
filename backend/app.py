@@ -1,27 +1,13 @@
 # -*- coding: utf-8 -*-
-from ast import Store
-from calendar import c
-from crypt import methods
-from flask import *
-from flask_mysqldb import MySQL
-from dotenv import load_dotenv
-import os
 
-# データベースログインの PASS を取得
-load_dotenv(override=True)
-PASSWORD = os.getenv('DATABASE_PASSWORD')
+from flask import *
+
+from db_access import db_access
+
 
 app = Flask(__name__)
-
-# 日本語を使えるように
-app.config['JSON_AS_ASCII'] = False
-app.config['MYSQL_USER'] = 'night'
-app.config['MYSQL_PASSWORD'] = PASSWORD
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_DB'] = 'test'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-
-mysql = MySQL(app)
+# データベースへのアクセスを認証
+mysql = db_access(app)
 
 # ログイン処理
 @app.route('/login/',methods=['POST'])
