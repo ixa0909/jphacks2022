@@ -31,20 +31,21 @@ def stores():
     data = CS.fetchall()
     return jsonify(data)
 
-@app.route('/menues',methods=["GET"])
+# メニュー一覧を store_id に応じて返す
+@app.route('/menues',methods=["POST"])
 def menues():
+    store_id = request.form["store_id"]
     CS = mysql.connection.cursor()
-    # CS.execute("INSERT INTO stores(name,image_url) VALUES ('くら寿司','avbaaba')")
     # mysql.connection.commit()
 
-    CS.execute("SELECT * FROM menues where store_id=1")
+    CS.execute("SELECT * FROM menues where store_id="+store_id)
     data = CS.fetchall()
     return jsonify(data)
 
 @app.route('/login/',methods=['POST'])
 def CONNECT_DB_USER():
-    a = request.form["user"]
-    print(a)
+    user = request.form["user"]
+    # print(user)
     # フロントからデータを受け取って挿入と照合したい
     CS = mysql.connection.cursor()
     # CS.execute("INSERT INTO stores(name) VALUES ('くら寿司')")
