@@ -108,7 +108,7 @@ def check_complete():
 
     # コードの動き確認用
     # for i in range(1,50):
-    #     cs.execute("insert into order_history (user_id, menu_id) values ('1',"+str(i)+")")
+    #     cs.execute("insert into order_history (user_id, menu_id,store_id) values ('1',"+str(i)+",'1')")
     # mysql.connection.commit()
 
     # mysql における差分集合
@@ -133,8 +133,24 @@ def check_complete():
     else:
         return "complete"
     
-    
+# 履歴を表示
+@app.route('/history',methods=["GET"])
+def get_history():
+    req = request.args
+    store_id = req.get("store_id")
+    user_id = req.get("user_id")
 
+    # 店の履歴
+    cs = mysql.connection.cursor()
+    cs.execute("SELECT * FROM come_history WHERE user_id = "+str(user_id))
+    store_history = cs.fetchall()
+    
+    # 注文の履歴
+    cs.execute("SELECT * FROM order_history where store_id = "+str(store_id))
+    order_history = cs.fetchall()
+    return jsonify({"store_history":store_history,"order_history":order_history})
+        
+        
 if __name__ == '__main__':
     app.debug = True
     app.run(port=8080)
