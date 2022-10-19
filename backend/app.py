@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from ast import Store
+from calendar import c
 from crypt import methods
 from flask import *
 from flask_mysqldb import MySQL
@@ -107,21 +108,33 @@ def check_complete():
         return "0"
 
     cs = mysql.connection.cursor()
+
+    # コードの動き確認用
+    # for i in range(1,50):
+    #     cs.execute("insert into order_history (user_id, menu_id) values ('1',"+str(i)+")")
+    # mysql.connection.commit()
+
     # mysql における差分集合
     # https://qiita.com/Hiraku/items/71873bf31e503eb1b4e1
     cs.execute("select count(id) from (select menues.id from menues where store_id = "+store_id+\
                 " and menues.id not in (\
                   select menu_id from order_history where user_id = "+user_id+")) as not_complete")
 
-    # cs.execute("select id from menues where store_id = "+store_id)
-    # cs.execute("select menu_id from order_history where user_id = "+user_id)
     check = cs.fetchall()
-    return jsonify(check)
+    # check は tuple 型
+    check =check[0]["count(id)"]
+    print(check)
+
     if check:
         # 制覇率を渡す
-        return "60%"
+        # 店の商品数を計算する
+        cs.execute("select count(id) from menues where store_id = "+store_id)
+        count_food = cs.fetchone()
+        # count_food は 辞書型
+        count_food = count_food["count(id)"]
+        return str(100*check//count_food)+"%"
     else:
-        return "全てのメニューを制覇しました！"
+        return "complete"
     
     
 
