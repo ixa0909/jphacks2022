@@ -78,7 +78,7 @@ def get_stores():
 def menues():
     if request.method == "GET":
         req = request.args
-        store_id = req.get("store_id")
+        store_id = req.get_data("store_id")
 
         cs = mysql.connection.cursor()
         cs.execute("SELECT * FROM menues where store_id="+store_id)
@@ -146,8 +146,8 @@ def check_complete():
 @app.route('/history',methods=["GET"])
 def get_history():
     req = request.args
-    store_id = req.get("store_id")
-    user_id = req.get("user_id")
+    store_id = req.get_data("store_id")
+    user_id = req.get_data("user_id")
 
     # 店の履歴
     cs = mysql.connection.cursor()
