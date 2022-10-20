@@ -34,7 +34,7 @@ def CONNECT():
 # ログイン処理
 @app.route('/login',methods=['POST'])
 def CONNECT_DB_USER():
-    user_id = request.form["user_id"]
+    user_id = request.json["user_id"]
     
     # フロントからデータを受け取って挿入と照合したい
     cs = mysql.connection.cursor()
@@ -61,8 +61,8 @@ def get_stores():
     else: # request.method == "POST" を想定
     # 来店履歴に登録
         try:
-            user_id = request.form["user_id"]
-            store_id = request.form["store_id"]
+            user_id = request.json["user_id"]
+            store_id = request.json["store_id"]
         except:
             return "0"
             
@@ -78,7 +78,7 @@ def get_stores():
 def menues():
     if request.method == "GET":
         req = request.args
-        store_id = req.get_data("store_id")
+        store_id = req.get("store_id")
 
         cs = mysql.connection.cursor()
         cs.execute("SELECT * FROM menues where store_id="+store_id)
@@ -93,8 +93,8 @@ def menues():
         return jsonify({"recommend":recommend,"menues":menues})
     else: # request.method == "POST" を想定
         try:
-            user_id = request.form["user_id"]
-            menu_id = request.form["menu_id"]
+            user_id = request.json["user_id"]
+            menu_id = request.json["menu_id"]
         except: 
             return "0"
 
@@ -108,12 +108,13 @@ def menues():
 # 達成度を表示(コンプリート画面)
 @app.route('/check_complete',methods=["POST"])
 def check_complete():
+
     try:
-        user_id = request.form["user_id"]
-        store_id = request.form["store_id"]
+        user_id = request.json["user_id"]
+        store_id = request.json["store_id"]
     except:
         return "0"
-
+    print(user_id)
     cs = mysql.connection.cursor()
 
     # コードの動き確認用
@@ -146,8 +147,8 @@ def check_complete():
 @app.route('/history',methods=["GET"])
 def get_history():
     req = request.args
-    store_id = req.get_data("store_id")
-    user_id = req.get_data("user_id")
+    store_id = req.get("store_id")
+    user_id = req.get("user_id")
 
     # 店の履歴
     cs = mysql.connection.cursor()
@@ -161,5 +162,5 @@ def get_history():
         
 
 if __name__ == '__main__':
-    # app.debug = True
+    app.debug = True
     app.run(host="0.0.0.0",port=8080)
