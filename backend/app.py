@@ -16,8 +16,7 @@ from flask_mysqldb import MySQL
 # データベースログインの PASSWORD を取得
 load_dotenv(override=True)
 PASSWORD = os.getenv('DATABASE_PASSWORD')
-print(PASSWORD)
-print("----------------------------------------------------------------")
+
 # 日本語を使えるように
 app.config['JSON_AS_ASCII'] = False
 app.config['MYSQL_USER'] = 'night'
@@ -32,18 +31,18 @@ mysql = MySQL(app)
 @app.route('/login',methods=['POST'])
 def CONNECT_DB_USER():
     user_id = request.form["user_id"]
-    # print(user)
+    
     # フロントからデータを受け取って挿入と照合したい
     cs = mysql.connection.cursor()
 
     cs.execute("SELECT id FROM users where id = %s"%user_id)
     data = cs.fetchall()
     if len(data):
-        return "既存です"
+        return jsonify({"IsNew": False})
     else:
         cs.execute("insert into users (id) values (\'%s\')"%user_id)
         mysql.connection.commit()
-        return "新規です"
+        return jsonify({"IsNew": True})
 
 # 店一覧を表示
 @app.route('/stores',methods=["GET", "POST"])
@@ -67,7 +66,7 @@ def get_stores():
         cs.execute("insert into come_history(user_id,store_id) values("+user_id+","+store_id+")")
         mysql.connection.commit()
 
-        return "0"
+        return "1"
 
 
 # メニュー一覧を store_id に応じて返す
@@ -88,7 +87,7 @@ def menues():
 
         # おすすめはメニューとで重複して渡している
         return jsonify({"recommend":recommend,"menues":menues})
-    else: # request.method == "GET" を想定
+    else: # request.method == "POST" を想定
         try:
             user_id = request.form["user_id"]
             menu_id = request.form["menu_id"]
@@ -114,9 +113,9 @@ def check_complete():
     cs = mysql.connection.cursor()
 
     # コードの動き確認用
-    # for i in range(1,50):
-    #     cs.execute("insert into order_history (user_id, menu_id,store_id) values ('1',"+str(i)+",'1')")
-    # mysql.connection.commit()
+    for i in range(1,50):
+        cs.execute("insert into order_history (user_id, menu_id,store_id) values ('1',"+str(i)+",'1')")
+    mysql.connection.commit()
 
     # mysql における差分集合 ↓store_id を order_history に加えたので変更した方が良さそう
     # https://qiita.com/Hiraku/items/71873bf31e503eb1b4e1
@@ -127,18 +126,17 @@ def check_complete():
     check = cs.fetchall()
     # check は tuple 型
     check =check[0]["count(id)"]
-    print(check)
-
+    # 制覇率を渡す
+    # 店の商品数を計算する
+    cs.execute("select count(id) from menues where store_id = "+store_id)
+    count_food = cs.fetchone()
+    # count_food は 辞書型
+    count_food = count_food["count(id)"]
     if check:
-        # 制覇率を渡す
-        # 店の商品数を計算する
-        cs.execute("select count(id) from menues where store_id = "+store_id)
-        count_food = cs.fetchone()
-        # count_food は 辞書型
-        count_food = count_food["count(id)"]
-        return str(100*check//count_food)+"%"
+        
+        return jsonify({"complete":str(100*check//count_food)+"%"})
     else:
-        return "complete"
+        return jsonify({"complete":str(100*check//count_food)+"%"})
     
 # 履歴を表示
 @app.route('/history',methods=["GET"])
