@@ -22,7 +22,7 @@ app.config['JSON_AS_ASCII'] = False
 app.config['MYSQL_USER'] = 'night'
 app.config['MYSQL_PASSWORD'] = PASSWORD
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_DB'] = 'test'
+app.config['MYSQL_DB'] = 'jphack'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
