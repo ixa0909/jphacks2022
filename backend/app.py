@@ -108,13 +108,16 @@ def menues():
 # 達成度を表示(コンプリート画面)
 @app.route('/check_complete',methods=["POST"])
 def check_complete():
-
+    print(1)
     try:
         user_id = request.json["user_id"]
         store_id = request.json["store_id"]
+        print(user_id)
+        print(store_id)
+        print(2)
     except:
         return "0"
-    print(user_id)
+    print(3)
     cs = mysql.connection.cursor()
 
     # コードの動き確認用
