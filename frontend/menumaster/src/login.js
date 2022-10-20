@@ -1,17 +1,19 @@
-import React ,{Component} from 'react';
+import React ,{Component,useCallback} from 'react';
 import axios from "axios";
 import {Button,Grid,Box,TextField } from '@mui/material';
+import {Navigate} from 'react-router-dom';
 
-const baseURL = "https://jsonplaceholder.typicode.com/posts";
 export default class Login extends Component{
   constructor(props){
     super(props);
     this.state={
-      loginned:false,
+      submitted:false,
       inputid:'',
       id:''
     };
   }
+
+
 
   onInput= (e) => {
     this.setState(
@@ -25,19 +27,20 @@ export default class Login extends Component{
     
   }
 
-  sendid = () => {
+  sendid = (e) => {
+    e.preventDefault();
     const {inputid,id}=this.state;
     this.setState({
       id:this.state.inputid
     }, () => {
       console.log(this.state.id);
-      this.handleSubmit();
-  })
+      this.handleSubmit()
+    })
    
   }
 //  POST ID
   handleSubmit = function() {
-
+    
 
     const user = {
       name: this.state.id
@@ -47,6 +50,12 @@ export default class Login extends Component{
       .then(res => {
         console.log(res);
         console.log(res.data);
+        sessionStorage.setItem('shoplist',JSON.stringify(res.data));
+        localStorage.setItem('userid',this.state.id);
+        console.log("navigate");
+        this.setState({submitted: true});
+        window.location.href="/shop";
+        
       })
   }
 
@@ -54,7 +63,9 @@ export default class Login extends Component{
 
   render(){
     const {id}=this.state;
+   
     return (
+      
       <Grid container alignItems='center' justifyContent='center' direction="column">
           <Grid item xs={12}>
               <p>IDを入力してください</p>

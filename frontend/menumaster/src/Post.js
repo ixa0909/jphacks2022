@@ -1,7 +1,7 @@
 import React ,{Component} from 'react';
 import axios from "axios";
 import {Button,Grid,Box,TextField } from '@mui/material';
-
+import { Link } from "react-router-dom";
 
 export default class PersonList extends Component{
   state = {
@@ -31,7 +31,9 @@ export default class PersonList extends Component{
       <div>
         <form onSubmit={this.handleSubmit}>
           <label>
+          <Link to="/login">
             Person Name:
+            </Link>
             <input type="text" name="name" onChange={this.handleChange} />
           </label>
           <button type="submit">Add</button>
