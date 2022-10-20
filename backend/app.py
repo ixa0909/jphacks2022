@@ -1,11 +1,32 @@
 # -*- coding: utf-8 -*-
 
 from flask import *
-from db_access import db_access
+# from db_access import db_access
 
 app = Flask(__name__)
+
 # データベースへのアクセスを認証
-mysql = db_access(app)
+
+from dotenv import load_dotenv
+import os
+from flask_mysqldb import MySQL
+
+
+
+# データベースログインの PASSWORD を取得
+load_dotenv(override=True)
+PASSWORD = os.getenv('DATABASE_PASSWORD')
+print(PASSWORD)
+print("----------------------------------------------------------------")
+# 日本語を使えるように
+app.config['JSON_AS_ASCII'] = False
+app.config['MYSQL_USER'] = 'night'
+app.config['MYSQL_PASSWORD'] = PASSWORD
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_DB'] = 'test'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
+mysql = MySQL(app)
 
 # ログイン処理
 @app.route('/login',methods=['POST'])

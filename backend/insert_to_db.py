@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # MySQLdbのインポート
 import MySQLdb
 from dotenv import load_dotenv
