@@ -157,5 +157,5 @@ def get_history():
         
 
 if __name__ == '__main__':
-    app.debug = True
+    # app.debug = True
     app.run(port=80)
