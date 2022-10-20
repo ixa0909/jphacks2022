@@ -27,6 +27,10 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
+@app.route('/',methods=['GET'])
+def CONNECT_DB_USER():
+    return "hello"
+
 # ログイン処理
 @app.route('/login',methods=['POST'])
 def CONNECT_DB_USER():
