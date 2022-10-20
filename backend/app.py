@@ -27,7 +27,7 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
-@app.route('/',methods=['GET'])
+@app.route('/hello',methods=['GET'])
 def CONNECT():
     return "hello"
 
