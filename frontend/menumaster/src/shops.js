@@ -1,6 +1,6 @@
 import React ,{Component,useCallback} from 'react';
 import axios from "axios";
-import {Button,Grid,Box,TextField,Card, Typography, CardContent, CardMedia } from '@mui/material';
+import {Button,Grid,Box,TextField,Card, Typography, CardContent, CardMedia,CardActions } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import { Link } from "react-router-dom";
 export default class Shops extends Component{
@@ -112,7 +112,7 @@ export default class Shops extends Component{
     
     return (
      
-      <Grid container style={{padding:"50px"}} spacing={2} alignItems='center' justifyContent='center'>
+      <Grid container style={{padding:"20px"}} spacing={2} alignItems='center' justifyContent='center'>
 
           <Grid item xs={12} style={{textAlign:"center"}}>
               <h1 >近くの店</h1>
@@ -143,7 +143,9 @@ export default class Shops extends Component{
                   {'"a benevolent smile"'}
                 </Typography>
               </CardContent>
-              
+              <CardActions>
+              <Button size="small">Learn More</Button>
+              </CardActions>
               </Card>
 
             </Grid>

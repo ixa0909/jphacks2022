@@ -3,33 +3,9 @@ import axios from "axios";
 import {Button,Grid,Box,TextField,Card, Typography, CardContent, CardMedia, Fab, Badge } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import { Link } from "react-router-dom";
-export default class Menus extends Component{
+export default class Complete extends Component{
   constructor(props){
     super(props);
-    let shoplistjson="";
-    if(sessionStorage.getItem('shoplist')!==null){
-      shoplistjson=JSON.parse(sessionStorage.getItem('shoplist'));
-    }
-    shoplistjson=[
-      {
-        "name":"1号店",
-        "score":100
-      },
-     {
-        "name":"2号店",
-        "score":300
-      },
-     {
-        "name":"3号店",
-        "score":600
-      },
-     {
-        "name":"4号店",
-        "score":200
-      },
-    ]
-
-    
     this.state={
       userid:'',
       shoplist:shoplistjson
@@ -112,7 +88,6 @@ export default class Menus extends Component{
 
     //sticky reyout
     let regularDiv = {
-      background:"red",
       textAlign: "center",
       position: "fixed",
       left: "0",
@@ -182,8 +157,8 @@ export default class Menus extends Component{
           {array.map((shop,index) =>
             <Grid item xs={6}>
 
-            <Card variant="outlined" >
-              <CardContent >
+            <Card variant="outlined">
+              <CardContent>
                 <CardMedia
                   component="img"
                   height="194"
@@ -213,7 +188,7 @@ export default class Menus extends Component{
         <div style={regularDiv}>
         <Grid container alignItems='center' justifyContent='center'>
           <Grid item xs={4} style={{textAlign:"center"}}>
-          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
+          <Card variant="outlined">
             <Link to="/login">
               <CardContent>
               
@@ -224,7 +199,7 @@ export default class Menus extends Component{
               </Card>
           </Grid>
           <Grid item xs={4} style={{textAlign:"center"}}>
-          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
+          <Card variant="outlined">
             <Link to="/login">
               <CardContent>
               
@@ -235,7 +210,7 @@ export default class Menus extends Component{
               </Card>
           </Grid>
           <Grid item xs={4} style={{textAlign:"center"}}>
-          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
+          <Card variant="outlined">
             <Link to="/login">
               <CardContent>
               
