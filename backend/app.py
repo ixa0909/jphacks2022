@@ -79,11 +79,12 @@ def menues():
         try:
             user_id = request.json["user_id"]
             menu_id = request.json["menu_id"]
+            store_id = request.json["store_id"]
         except: 
             return "0"
 
         cs = mysql.connection.cursor()
-        cs.execute("insert into order_history(user_id,menu_id) values(\'%s\',\'%s\')"%(user_id,menu_id))
+        cs.execute("insert into order_history(user_id,menu_id,store_id) values(\'%s\',\'%s\')"%(user_id,menu_id,store_id))
         mysql.connection.commit()
         
         # 完了に応じた番号（値）を戻り値にする
