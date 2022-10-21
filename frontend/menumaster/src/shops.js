@@ -128,7 +128,7 @@ export default class Shops extends Component{
                 </Typography>
               </CardContent>
               <CardActions>
-              <Link to={"/menu?id="+shop.value.id}>
+              <Link to={"/menu?shopid="+shop.value.id}>
               <Button size="small">Learn More</Button>
               </Link>
               </CardActions>

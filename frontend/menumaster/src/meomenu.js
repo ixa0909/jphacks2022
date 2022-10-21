@@ -1,13 +1,11 @@
-import React ,{Component,useCallback} from 'react';
+import React ,{Component,useCallback,useState} from 'react';
 import axios from "axios";
 import {Button,Grid,Box,TextField,Card, Typography, CardContent, CardMedia, Fab, Badge } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import { Link } from "react-router-dom";
-export default class Menus extends Component{
-  constructor(props){
-    super(props);
+const Neomenu = () => {
+
     let shoplistjson="";
-    console.log(props);
     
     if(sessionStorage.getItem('shoplist')!==null){
       shoplistjson=JSON.parse(sessionStorage.getItem('shoplist'));
@@ -31,49 +29,17 @@ export default class Menus extends Component{
       },
     ]
 
-    
-    this.state={
-      userid:'',
-      shoplist:shoplistjson
-    }
-  }
-
-  
+    const [userid, setUserid] = useState("")
+    const [shoplist, setShoplist] = useState(shoplistjson)
 
 
-  onInput= (e) => {
-    this.setState(
-      function(state){
-        console.log(e.target.value)
-        return {
-          inputid:e.target.value
-        }
-      }
-    )
-    
-  }
 
-  sendid = () => {
-    const {inputid,id}=this.state;
-    const navigate = useNavigate();
-    navigate("/shop",);
-    this.setState({
-      id:this.state.inputid
-    }, () => {
-      console.log(this.state.id);
-      this.handleSubmit();
-  },() => {
-    const navigate = useNavigate();
-    navigate("/shop",);
-  } )
-   
-  }
 //  POST ID
-  handleSubmit = function() {
+  const handleSubmit = function() {
 
 
     const user = {
-      name: this.state.id
+      name: userid
     };
 
     axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
@@ -85,8 +51,7 @@ export default class Menus extends Component{
 
 
 
-  render(){
-    const {id}=this.state;
+  
 
     if (localStorage.getItem("userid")==null){
       return (
@@ -106,7 +71,6 @@ export default class Menus extends Component{
       );
     }
 
-    var {shoplist}=this.state;
     var array=Object.entries(shoplist).map(([key, value]) => ({key, value}))
     console.log(array)
     array.sort((a,b)=>b.value.score-a.value.score);
@@ -257,5 +221,7 @@ export default class Menus extends Component{
   )
 
 
-  }
+  
 }
+
+export default Neomenu;

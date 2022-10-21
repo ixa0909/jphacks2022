@@ -10,6 +10,7 @@ import Prounce from './shopfunc'
 import Menus from './menus';
 import Complete from './complete';
 import Complete2 from './complete2';
+import Neomenu from './meomenu';
 function App() {
   return (
     <BrowserRouter>
@@ -18,9 +19,10 @@ function App() {
         <Route path={`/register/`} element={<PersonList />} />
         <Route path={`/login/`} element={<Login />} />
         <Route path={`/shop/`} element={<Shops />} />
-        <Route path={`/menu/`} element={<Menus />} />
+        <Route path={`/menu/:shopid`} element={<Neomenu />} />
         <Route path={`/complete/`} element={<Complete2 />} />
         <Route path={`/test/`} element={<Prounce />} />
+        
       </Routes>
     </BrowserRouter>
   );
