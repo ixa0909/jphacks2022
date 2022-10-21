@@ -20,6 +20,7 @@
 <p align="center">
 <img src = ./imageForREADME/icon.png style ="width:266pt;height:auto;"/>
 </p>
+
 ### 活用した技術
 #### API・データ
 * 
