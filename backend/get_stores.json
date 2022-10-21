@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "image_url": "image/ce1c12e6-8ba8-4486-946b-a9f9e35c9ca1.png",
+    "name": "寿司"
+  },
+  {
+    "id": 2,
+    "image_url": "image/7d83474c-890d-48b4-9675-387a8757886b.png",
+    "name": "ファミリーレストラン"
+  },
+  {
+    "id": 3,
+    "image_url": "image/16df185c-ece5-4355-8e43-cd743c85cc0b.png",
+    "name": "カレー"
+  },
+  {
+    "id": 4,
+    "image_url": "image/a3f5f7c0-c505-4fba-8010-b8514aea5057.png",
+    "name": "ラーメン"
+  },
+  {
+    "id": 5,
+    "image_url": "image/cb32f13d-984b-4a1f-948f-023251c13931.png",
+    "name": "ドーナツ"
+  },
+  {
+    "id": 6,
+    "image_url": "bnakbna",
+    "name": "牛丼"
+  }
+]
