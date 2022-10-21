@@ -75,6 +75,7 @@ def menues():
 
         # おすすめにあるものはメニュー一覧にも入れている
         return jsonify({"complete":complete,"recommend":recommend,"menues":menues})
+        
     else: # request.method == "POST" を想定
         try:
             user_id = request.json["user_id"]
@@ -84,7 +85,7 @@ def menues():
             return "0"
 
         cs = mysql.connection.cursor()
-        cs.execute("insert into order_history(user_id,menu_id,store_id) values(\'%s\',\'%s\')"%(user_id,menu_id,store_id))
+        cs.execute("insert into order_history(user_id,menu_id,store_id) values(\'%s\',\'%s\',\'%s\')"%(user_id,menu_id,store_id))
         mysql.connection.commit()
         
         # 完了に応じた番号（値）を戻り値にする
