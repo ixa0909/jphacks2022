@@ -8,7 +8,7 @@ mysql = db_access(app)
 
 
 # ログイン処理
-@app.route('/login',methods=['POST'])
+@app.route('/api/login',methods=['POST'])
 def CONNECT_DB_USER():
     user_id = request.json["user_id"]
     
@@ -25,7 +25,7 @@ def CONNECT_DB_USER():
         return jsonify({"IsNew": True})
 
 # 店一覧を表示
-@app.route('/stores',methods=["GET", "POST"])
+@app.route('/api/stores',methods=["GET", "POST"])
 def get_stores():
     if request.method == "GET":
         cs = mysql.connection.cursor()
@@ -50,7 +50,7 @@ def get_stores():
 
 
 # メニュー一覧を store_id に応じて返す
-@app.route('/menues',methods=["GET","POST"])
+@app.route('/api/menues',methods=["GET","POST"])
 def menues():
     if request.method == "GET":
         req = request.args
@@ -80,7 +80,7 @@ def menues():
         return "0"
 
 # 達成度を表示(コンプリート画面)
-@app.route('/check_complete',methods=["POST"])
+@app.route('/api/check_complete',methods=["POST"])
 def check_complete():
     try:
         user_id = request.json["user_id"]
@@ -113,7 +113,7 @@ def check_complete():
         return jsonify({"complete":str(100*check//count_food)+"%"})
     
 # 履歴を表示
-@app.route('/history',methods=["GET"])
+@app.route('/api/history',methods=["GET"])
 def get_history():
     req = request.args
     store_id = req.get("store_id")
