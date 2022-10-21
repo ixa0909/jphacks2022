@@ -43,7 +43,7 @@ def get_stores():
             return "0"
             
         cs = mysql.connection.cursor()
-        cs.execute("insert into come_history(user_id,store_id) values("+user_id+","+store_id+")")
+        cs.execute("insert into come_history(user_id,store_id) values(\'%s\',\'%s\')"%(user_id,store_id))
         mysql.connection.commit()
 
         return "1"
@@ -53,14 +53,17 @@ def get_stores():
 @app.route('/api/menues',methods=["GET","POST"])
 def menues():
     if request.method == "GET":
-        req = request.args
-        store_id = req.get("store_id")
+        try:
+            req = request.args
+            store_id = req.get("store_id")
+        except:
+            return "0"
 
         cs = mysql.connection.cursor()
-        cs.execute("SELECT * FROM menues where store_id="+store_id)
+        cs.execute("SELECT * FROM menues where store_id=\'%s\'"%store_id)
         menues = cs.fetchall()
         
-        cs.execute("SELECT * FROM menues where recommend=true and store_id="+store_id)
+        cs.execute("SELECT * FROM menues where recommend=true and store_id=\'%s\'"%store_id)
         recommend = cs.fetchall()
 
         # おすすめにあるものはメニュー一覧にも入れている
@@ -73,7 +76,7 @@ def menues():
             return "0"
 
         cs = mysql.connection.cursor()
-        cs.execute("insert into come_history(user_id,store_id) values("+user_id+","+menu_id+")")
+        cs.execute("insert into come_history(user_id,store_id) values(\'%s\',\'%s\')"%(user_id,menu_id))
         mysql.connection.commit()
         
         # 完了に応じた番号（値）を戻り値にする
@@ -84,30 +87,32 @@ def menues():
 def check_complete():
     try:
         user_id = request.json["user_id"]
-        store_id = request.json["store_id"]
-        
+        store_id = request.json["store_id"] 
     except:
         return "0"
    
     cs = mysql.connection.cursor()
+    print(1)
+    print("--------------------------------")
 
     # mysql における差分集合 ↓store_id を order_history に加えたので変更した方が良さそう
     # https://qiita.com/Hiraku/items/71873bf31e503eb1b4e1
-    cs.execute("select count(id) from (select menues.id from menues where store_id = "+store_id+\
-                " and menues.id not in (\
-                  select menu_id from order_history where user_id = "+user_id+")) as not_complete")
-
+    cs.execute("select count(id) from (select menues.id from menues where store_id = \'%s\'\
+                 and menues.id not in (\
+                  select menu_id from order_history where user_id = \'%s\')) as not_complete"%(store_id, user_id))
+    print(2)
+    print("--------------------------------")
     check = cs.fetchall()
     # check は tuple 型
     check =check[0]["count(id)"]
     # 制覇率を渡す
     # 店の商品数を計算する
-    cs.execute("select count(id) from menues where store_id = "+store_id)
+    cs.execute("select count(id) from menues where store_id = \'%s\'"%store_id)
     count_food = cs.fetchone()
     # count_food は 辞書型
     count_food = count_food["count(id)"]
+
     if check:
-        
         return jsonify({"complete":str(100*check//count_food)+"%"})
     else:
         return jsonify({"complete":str(100*check//count_food)+"%"})
@@ -121,11 +126,11 @@ def get_history():
 
     # 店の履歴
     cs = mysql.connection.cursor()
-    cs.execute("SELECT * FROM come_history WHERE user_id = "+str(user_id))
+    cs.execute("SELECT * FROM come_history WHERE user_id = \'%s\'"%str(user_id))
     store_history = cs.fetchall()
     
     # 注文の履歴
-    cs.execute("SELECT * FROM order_history where store_id = "+str(store_id))
+    cs.execute("SELECT * FROM order_history where store_id = \'%s\'"%str(store_id))
     order_history = cs.fetchall()
     return jsonify({"store_history":store_history,"order_history":order_history})
         
