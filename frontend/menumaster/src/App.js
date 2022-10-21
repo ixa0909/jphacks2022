@@ -9,6 +9,7 @@ import Shops from './shops';
 import Prounce from './shopfunc'
 import Menus from './menus';
 import Complete from './complete';
+import Complete2 from './complete2';
 function App() {
   return (
     <BrowserRouter>
@@ -19,6 +20,7 @@ function App() {
         <Route path={`/shop/`} element={<Shops />} />
         <Route path={`/menu/`} element={<Menus />} />
         <Route path={`/complete/`} element={<Complete />} />
+        <Route path={`/complete2/`} element={<Complete2 />} />
         <Route path={`/test/`} element={<Prounce />} />
       </Routes>
     </BrowserRouter>
