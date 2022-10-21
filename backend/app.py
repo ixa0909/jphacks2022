@@ -75,7 +75,7 @@ def menues():
 
         # おすすめにあるものはメニュー一覧にも入れている
         return jsonify({"complete":complete,"recommend":recommend,"menues":menues})
-        
+
     else: # request.method == "POST" を想定
         try:
             user_id = request.json["user_id"]
@@ -140,26 +140,26 @@ def get_history():
     order_history = cs.fetchall()
     return jsonify({"store_history":store_history,"order_history":order_history})
         
-# 履歴を表示
-@app.route('/api/recommend',methods=["POST"])
-def get_recommend():
+# # 履歴を表示
+# @app.route('/api/recommend',methods=["POST"])
+# def get_recommend():
     
-    user_id = request.json["user_id"]
-    store_id = request.json["store_id"]
-    menu_id = request.json["menu_id"]
+#     user_id = request.json["user_id"]
+#     store_id = request.json["store_id"]
+#     menu_id = request.json["menu_id"]
     
-    # 店の履歴
-    cs = mysql.connection.cursor()
-    cs.execute("select * from (order_history as a inner join (select user_id from order_history where menu_id = \'%s\') as b on a.user_id = b.user_id) as c group by c.user_id "%menu_id)
+#     # 店の履歴
+#     cs = mysql.connection.cursor()
+#     cs.execute("select * from (order_history as a inner join (select user_id from order_history where menu_id = \'%s\') as b on a.user_id = b.user_id) as c group by c.user_id "%menu_id)
     
     
-    a = cs.fetchall()
-    return jsonify(a)
+#     a = cs.fetchall()
+#     return jsonify(a)
     
-    # # 注文の履歴
-    # cs.execute("SELECT * FROM order_history where store_id = \'%s\'"%str(store_id))
-    # order_history = cs.fetchall()
-    # return jsonify({"store_history":store_history,"order_history":order_history})
+#     # # 注文の履歴
+#     # cs.execute("SELECT * FROM order_history where store_id = \'%s\'"%str(store_id))
+#     # order_history = cs.fetchall()
+#     # return jsonify({"store_history":store_history,"order_history":order_history})
         
 if __name__ == '__main__':
     app.debug = True
