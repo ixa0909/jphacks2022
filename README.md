@@ -17,6 +17,9 @@
 * 
 
 ## 開発技術
+<div style="text-align:center;">
+<img src = ./imageForREADME/icon.png style ="width:266pt;height:auto;"/>
+</div>
 ### 活用した技術
 #### API・データ
 * 
