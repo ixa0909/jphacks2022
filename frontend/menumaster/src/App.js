@@ -19,7 +19,7 @@ function App() {
         <Route path={`/register/`} element={<PersonList />} />
         <Route path={`/login/`} element={<Login />} />
         <Route path={`/shop/`} element={<Shops />} />
-        <Route path={`/menu/:shopid`} element={<Neomenu />} />
+        <Route path={`/menu/`} element={<Neomenu />} />
         <Route path={`/complete/`} element={<Complete2 />} />
         <Route path={`/test/`} element={<Prounce />} />
         

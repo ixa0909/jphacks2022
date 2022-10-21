@@ -1,15 +1,39 @@
 import React ,{Component,useCallback,useState} from 'react';
 import axios from "axios";
 import {Button,Grid,Box,TextField,Card, Typography, CardContent, CardMedia, Fab, Badge } from '@mui/material';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate,useLocation } from 'react-router-dom';
 import { Link } from "react-router-dom";
 const Neomenu = () => {
 
+    const search = useLocation().search;
+
+    const query = new URLSearchParams(search);
+    const [userid, setUserid] = useState("")
+    
+    
+
+
+       
+  
+      axios.post(`http://192.168.0.40/menues`, { user_id:userid, menu_id:query.get("shopid")})
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+          sessionStorage.setItem('menulist',JSON.stringify(res.data));
+
+          
+        })
+    
+    
+
+    console.log(query.get('shopid'));
     let shoplistjson="";
     
     if(sessionStorage.getItem('shoplist')!==null){
       shoplistjson=JSON.parse(sessionStorage.getItem('shoplist'));
     }
+
+    const [shoplist, setShoplist] = useState(shoplistjson)
     shoplistjson=[
       {
         "name":"1号店",
@@ -29,25 +53,10 @@ const Neomenu = () => {
       },
     ]
 
-    const [userid, setUserid] = useState("")
-    const [shoplist, setShoplist] = useState(shoplistjson)
+    
 
 
 
-//  POST ID
-  const handleSubmit = function() {
-
-
-    const user = {
-      name: userid
-    };
-
-    axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
-  }
 
 
 
@@ -111,7 +120,7 @@ const Neomenu = () => {
 
           
             {array.map((shop,index) =>
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={4} key={index}>
 
             <Card variant="outlined">
               <CardContent style={{position:"relative"}}>
@@ -144,7 +153,7 @@ const Neomenu = () => {
           </Grid>
           
           {array.map((shop,index) =>
-            <Grid item xs={6}>
+            <Grid item xs={6} md={4} key={index}>
 
             <Card variant="outlined" >
               <CardContent >
