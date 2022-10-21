@@ -56,6 +56,7 @@ def menues():
         try:
             req = request.args
             store_id = req.get("store_id")
+            user_id = req.get("user_id")
         except:
             return "0"
 
@@ -66,8 +67,12 @@ def menues():
         cs.execute("SELECT * FROM menues where recommend=true and store_id=\'%s\'"%store_id)
         recommend = cs.fetchall()
 
+        cs.execute("select menu_id from (select menu_id from order_history  \
+            where store_id = \'%s\' and user_id = \'%s\') as complete group by menu_id"%(store_id,user_id))
+        complete = cs.fetchall()
+
         # おすすめにあるものはメニュー一覧にも入れている
-        return jsonify({"recommend":recommend,"menues":menues})
+        return jsonify({"complete":complete,"recommend":recommend,"menues":menues})
     else: # request.method == "POST" を想定
         try:
             user_id = request.json["user_id"]
@@ -80,7 +85,7 @@ def menues():
         mysql.connection.commit()
         
         # 完了に応じた番号（値）を戻り値にする
-        return "0"
+        return "1"
 
 # 達成度を表示(コンプリート画面)
 @app.route('/api/check_complete',methods=["POST"])
@@ -92,16 +97,13 @@ def check_complete():
         return "0"
    
     cs = mysql.connection.cursor()
-    print(1)
-    print("--------------------------------")
-
+    
     # mysql における差分集合 ↓store_id を order_history に加えたので変更した方が良さそう
     # https://qiita.com/Hiraku/items/71873bf31e503eb1b4e1
     cs.execute("select count(id) from (select menues.id from menues where store_id = \'%s\'\
                  and menues.id not in (\
                   select menu_id from order_history where user_id = \'%s\')) as not_complete"%(store_id, user_id))
-    print(2)
-    print("--------------------------------")
+    
     check = cs.fetchall()
     # check は tuple 型
     check =check[0]["count(id)"]
@@ -134,7 +136,23 @@ def get_history():
     order_history = cs.fetchall()
     return jsonify({"store_history":store_history,"order_history":order_history})
         
+# 履歴を表示
+# @app.route('/api/recommend',methods=["POST"])
+# def get_history():
+#     req = request.args
+#     store_id = req.get("user_id")
+#     user_id = req.get("store_id")
 
+#     # 店の履歴
+#     cs = mysql.connection.cursor()
+#     cs.execute("SELECT menu_id from order_history where order_time = (select max(order_time))from)
+#     store_history = cs.fetchall()
+    
+#     # 注文の履歴
+#     cs.execute("SELECT * FROM order_history where store_id = \'%s\'"%str(store_id))
+#     order_history = cs.fetchall()
+#     return jsonify({"store_history":store_history,"order_history":order_history})
+        
 if __name__ == '__main__':
     app.debug = True
     app.run(host="0.0.0.0",port=8080)
