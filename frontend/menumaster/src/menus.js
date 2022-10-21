@@ -112,7 +112,6 @@ export default class Menus extends Component{
 
     //sticky reyout
     let regularDiv = {
-      background:"red",
       textAlign: "center",
       position: "fixed",
       left: "0",

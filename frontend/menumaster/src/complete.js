@@ -8,41 +8,12 @@ export default class Complete extends Component{
     super(props);
     this.state={
       userid:'',
-      shoplist:shoplistjson
     }
   }
 
   
 
 
-
-  onInput= (e) => {
-    this.setState(
-      function(state){
-        console.log(e.target.value)
-        return {
-          inputid:e.target.value
-        }
-      }
-    )
-    
-  }
-
-  sendid = () => {
-    const {inputid,id}=this.state;
-    const navigate = useNavigate();
-    navigate("/shop",);
-    this.setState({
-      id:this.state.inputid
-    }, () => {
-      console.log(this.state.id);
-      this.handleSubmit();
-  },() => {
-    const navigate = useNavigate();
-    navigate("/shop",);
-  } )
-   
-  }
 //  POST ID
   handleSubmit = function() {
 

@@ -8,6 +8,7 @@ import Login  from './login';
 import Shops from './shops';
 import Prounce from './shopfunc'
 import Menus from './menus';
+import Complete from './complete';
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ function App() {
         <Route path={`/login/`} element={<Login />} />
         <Route path={`/shop/`} element={<Shops />} />
         <Route path={`/menu/`} element={<Menus />} />
+        <Route path={`/complete/`} element={<Complete />} />
         <Route path={`/test/`} element={<Prounce />} />
       </Routes>
     </BrowserRouter>
