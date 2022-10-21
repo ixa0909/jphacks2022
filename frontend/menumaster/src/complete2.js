@@ -47,7 +47,9 @@ export default class Complete2 extends Component{
           </div>
           <h1>Congratulations!</h1>
           <p>You are all set. Well done!</p>
-          <button className="submit-btn" type="submit">Continue</button>
+          <Link to="/menu">
+            <button className="submit-btn" type="submit">Continue</button>
+          </Link>
         </div>
       </div>
     )

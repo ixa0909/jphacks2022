@@ -40,7 +40,7 @@ export default class Complete extends Component{
       <div>
         <div id="particles-js"></div>
       <div id="wrapper">
-      この中にコンテンツが入ります。
+      
       </div>
         </div>
       

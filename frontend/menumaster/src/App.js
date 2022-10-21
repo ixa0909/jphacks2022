@@ -19,12 +19,12 @@ function App() {
         <Route path={`/login/`} element={<Login />} />
         <Route path={`/shop/`} element={<Shops />} />
         <Route path={`/menu/`} element={<Menus />} />
-        <Route path={`/complete/`} element={<Complete />} />
-        <Route path={`/complete2/`} element={<Complete2 />} />
+        <Route path={`/complete/`} element={<Complete2 />} />
         <Route path={`/test/`} element={<Prounce />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
 
 export default App;

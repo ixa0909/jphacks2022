@@ -9,25 +9,9 @@ export default class Shops extends Component{
     let shoplistjson="";
     if(sessionStorage.getItem('shoplist')!==null){
       shoplistjson=JSON.parse(sessionStorage.getItem('shoplist'));
+      console.log(shoplistjson)
     }
-    shoplistjson=[
-      {
-        "name":"1号店",
-        "score":100
-      },
-     {
-        "name":"2号店",
-        "score":300
-      },
-     {
-        "name":"3号店",
-        "score":600
-      },
-     {
-        "name":"4号店",
-        "score":200
-      },
-    ]
+    
 
     
     this.state={
@@ -121,15 +105,15 @@ export default class Shops extends Component{
 
           
             {array.map((shop,index) =>
-            <Grid item xs={6}>
+            <Grid item xs={6} key={index}>
 
             <Card variant="outlined">
               <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                  Word of the Day
+                  レストラン
                 </Typography>
                 <Typography variant="h5" component="div">
-                  belent
+                {shop.value.name}
                 </Typography>
                 <CardMedia
                   component="img"
@@ -144,7 +128,9 @@ export default class Shops extends Component{
                 </Typography>
               </CardContent>
               <CardActions>
+              <Link to={"/menu?id="+shop.value.id}>
               <Button size="small">Learn More</Button>
+              </Link>
               </CardActions>
               </Card>
 
