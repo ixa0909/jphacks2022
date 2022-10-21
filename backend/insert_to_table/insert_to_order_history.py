@@ -22,7 +22,7 @@ cursor = connection.cursor()
 
 user_id = "user2"
 
-for i in range(10,30):
+for i in range(1,193,1):
     cursor.execute("insert into order_history (user_id, menu_id,store_id) values (\'%s\',\'%s\',1)"%(user_id,str(i)))
     connection.commit()
 
