@@ -83,11 +83,9 @@ def menues():
         cs = mysql.connection.cursor()
         cs.execute("SELECT * FROM menues where store_id="+store_id)
         menues = cs.fetchall()
-        # print(menues)
         
         cs.execute("SELECT * FROM menues where recommend=true and store_id="+store_id)
         recommend = cs.fetchall()
-        # print(recommend)
 
         # おすすめはメニューとで重複して渡している
         return jsonify({"recommend":recommend,"menues":menues})
@@ -108,16 +106,13 @@ def menues():
 # 達成度を表示(コンプリート画面)
 @app.route('/check_complete',methods=["POST"])
 def check_complete():
-    print(1)
     try:
         user_id = request.json["user_id"]
         store_id = request.json["store_id"]
-        print(user_id)
-        print(store_id)
-        print(2)
+        
     except:
         return "0"
-    print(3)
+   
     cs = mysql.connection.cursor()
 
     # コードの動き確認用
