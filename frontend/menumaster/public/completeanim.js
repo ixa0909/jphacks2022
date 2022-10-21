@@ -1,4 +1,6 @@
 window.addEventListener('load', function() {
+const animeElem = document.querySelector("#particles-js");
+if(!animeElem) return;
 particlesJS("particles-js",{
 	"particles":{
 		"number":{
