@@ -6,9 +6,6 @@ from db_access import db_access
 app = Flask(__name__)
 mysql = db_access(app)
 
-@app.route('/hello',methods=['GET'])
-def CONNECT():
-    return "hello"
 
 # ログイン処理
 @app.route('/login',methods=['POST'])
@@ -66,7 +63,7 @@ def menues():
         cs.execute("SELECT * FROM menues where recommend=true and store_id="+store_id)
         recommend = cs.fetchall()
 
-        # おすすめはメニューとで重複して渡している
+        # おすすめにあるものはメニュー一覧にも入れている
         return jsonify({"recommend":recommend,"menues":menues})
     else: # request.method == "POST" を想定
         try:
