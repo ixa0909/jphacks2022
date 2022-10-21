@@ -67,8 +67,10 @@ def menues():
         cs.execute("SELECT * FROM menues where recommend=true and store_id=\'%s\'"%store_id)
         recommend = cs.fetchall()
 
-        cs.execute("select menu_id from (select menu_id from order_history  \
-            where store_id = \'%s\' and user_id = \'%s\') as complete group by menu_id"%(store_id,user_id))
+        sql = "select menu_id from (select menu_id from order_history  \
+            where store_id = \'%s\' and user_id = \'%s\') as complete group by menu_id"%(store_id,user_id)
+        
+        cs.execute("select * from order_history as o inner join menues as m on m.id = o.menu_id where o.user_id=\'%s\' and o.store_id = \'%s\'"%(user_id,store_id))
         complete = cs.fetchall()
 
         # おすすめにあるものはメニュー一覧にも入れている
