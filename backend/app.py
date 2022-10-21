@@ -91,11 +91,6 @@ def check_complete():
    
     cs = mysql.connection.cursor()
 
-    # コードの動き確認用
-    for i in range(1,50):
-        cs.execute("insert into order_history (user_id, menu_id,store_id) values ('1',"+str(i)+",'1')")
-    mysql.connection.commit()
-
     # mysql における差分集合 ↓store_id を order_history に加えたので変更した方が良さそう
     # https://qiita.com/Hiraku/items/71873bf31e503eb1b4e1
     cs.execute("select count(id) from (select menues.id from menues where store_id = "+store_id+\

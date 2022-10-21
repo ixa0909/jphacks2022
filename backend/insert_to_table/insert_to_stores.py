@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# 没コード
+
 import MySQLdb
 from dotenv import load_dotenv
 import os
@@ -21,39 +23,6 @@ connection = MySQLdb.connect(
     db=MYSQL_DB)
 cursor = connection.cursor()
 
-# menues への insert 
-def insert_to_menues(table,columns,all_datas):
-    for datas in all_datas:
-        # try 可能なら　except 失敗したなら
-        try: 
-            sql = "INSERT INTO %s %s VALUES (\'%s\',\'%d\',\'%s\',\'%s\')"
-            cursor.execute(sql % (table, columns, datas[0],datas[1],datas[2],"image/"+datas[3]))
-            # 保存を実行
-            connection.commit()
-        except:
-            # エラーメッセージを出力
-            # print(traceback.format_exc())
-            pass# 何もしない
-        
-    # 接続を閉じる
-    connection.close()
-
-table = "menues"
-columns = "(name,store_id,price,image_url)"
-
-# データの読み込み。先頭で import pandas as pd としている
-df = pd.read_csv("kurazushi_menu.csv")
-# print(df.head())
-
-names = df["menu"]
-prices = df["price"].apply(lambda x: x.replace("円",""))
-store_id = [1 for _ in range(len(names))] # 寿司
-image_urls = df["image_url"]
-all_datas = zip(names, store_id,prices, image_urls)
-insert_to_menues(table,columns,all_datas)
-
-
-# 没コード
 def insert_to_stores(table,column,datas):
     for data in datas:
         # try 可能なら　except 失敗したなら
