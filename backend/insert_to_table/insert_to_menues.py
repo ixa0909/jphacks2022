@@ -43,6 +43,8 @@ columns = "(name,store_id,price,image_url)"
 
 # データの読み込み。先頭で import pandas as pd としている
 df = pd.read_csv("kurazushi_menu.csv")
+# df = pd.read_csv("yoshinoya_menu.csv")
+
 # print(df.head())
 
 names = df["menu"]

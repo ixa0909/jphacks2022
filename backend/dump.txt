@@ -1,0 +1,168 @@
+-- MySQL dump 10.13  Distrib 8.0.30, for macos12.6 (arm64)
+--
+-- Host: localhost    Database: jphack
+-- ------------------------------------------------------
+-- Server version	8.0.30
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `come_history`
+--
+
+DROP TABLE IF EXISTS `come_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `come_history` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(20) NOT NULL,
+  `store_id` bigint NOT NULL,
+  `come_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `store_id` (`store_id`),
+  CONSTRAINT `come_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `come_history_ibfk_2` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `come_history`
+--
+
+LOCK TABLES `come_history` WRITE;
+/*!40000 ALTER TABLE `come_history` DISABLE KEYS */;
+INSERT INTO `come_history` VALUES (1,'user1',1,'2022-10-22 02:33:04'),(2,'user1',2,'2022-10-22 02:33:04'),(3,'user2',1,'2022-10-22 02:33:04'),(4,'user2',2,'2022-10-22 02:33:04'),(5,'user3',1,'2022-10-22 02:33:04'),(6,'user3',2,'2022-10-22 02:33:04'),(7,'user4',1,'2022-10-22 02:33:04'),(8,'user4',2,'2022-10-22 02:33:04'),(9,'user1',1,'2022-10-22 03:29:20'),(10,'user1',1,'2022-10-22 03:38:13');
+/*!40000 ALTER TABLE `come_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `menues`
+--
+
+DROP TABLE IF EXISTS `menues`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `menues` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `recommend` tinyint(1) NOT NULL DEFAULT '0',
+  `store_id` bigint NOT NULL,
+  `price` int NOT NULL DEFAULT '0',
+  `image_url` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `store_id_index` (`store_id`),
+  CONSTRAINT `menues_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menues`
+--
+
+LOCK TABLES `menues` WRITE;
+/*!40000 ALTER TABLE `menues` DISABLE KEYS */;
+INSERT INTO `menues` VALUES (1,'牛丼',0,2,408,'image/03a3e684-d03a-4cbe-a692-eefaea5d214b.jpg'),(2,'肉だく牛丼',0,2,576,'image/36f715a5-02ab-4d95-a750-93ed357646aa.jpg'),(3,'ねぎだく牛丼',0,2,536,'image/91d52808-4ad2-4d48-b342-58cc8fab5f18.jpg'),(4,'ねぎラー油牛丼',0,2,536,'image/d18b8cc8-cee3-4a59-84b7-287fa96a2c6c.jpg'),(5,'ねぎ玉牛丼',0,2,536,'image/db7ba45d-77de-43ff-9fdc-59b17e4fdf33.jpg'),(6,'ねぎ半玉牛丼',0,2,546,'image/9a86f66d-da45-4a70-82d9-300e71bb6f85.jpg'),(7,'チーズ牛丼',0,2,536,'image/62a3e867-92f1-48b9-9e19-85b69ed3fea2.jpg'),(8,'キムチ牛丼',0,2,536,'image/c8950a69-58a9-477e-b3bf-dbefde01c3d4.jpg'),(9,'チーズ牛サラダ',0,2,598,'image/e592e98c-d944-450d-be6a-c02c460bdb15.jpg'),(10,'キムチ牛サラダ',0,2,598,'image/0b8972bf-525d-4b28-bd18-4b3bcde12592.jpg'),(11,'牛カレー',0,2,518,'image/6876d57d-fb76-4891-bd8d-946eb62fb832.jpg'),(12,'肉だく牛カレー',0,2,618,'image/e9f1d2da-d347-449a-83fe-8385e9f1cc5c.jpg'),(13,'牛カルビカレー',0,2,618,'image/e71d419e-b244-4362-a286-3b08a6df6630.jpg'),(14,'チーズカレー',0,2,506,'image/f43c69c2-32d0-40cc-b98e-b815e0fd3bac.jpg'),(15,'牛×牛カルビカレー',0,2,768,'image/79cfa387-7822-4f20-bc5b-098871651731.jpg'),(16,'カレー',0,2,378,'image/5802a748-42ad-401c-85da-d63bae4b39e0.jpg'),(17,'ねぎ塩豚定食',0,2,598,'image/9a4cb32b-f81e-466b-b865-9d375fc03038.jpg'),(18,'ねぎ塩鶏定食',0,2,598,'image/cb520944-5183-46c1-8e03-9b7008a49186.jpg'),(19,'牛皿定食',0,2,568,'image/4051a6a0-312f-448c-9d3c-a0b941b03aaf.jpg'),(20,'牛カルビ定食',0,2,598,'image/52d41616-05dc-4607-aa4f-a13e43984159.jpg'),(21,'牛鮭定食',0,2,598,'image/e7cee3c7-b6b0-4070-95b4-2c7433d791dd.jpg'),(22,'鯖みそ定食',0,2,598,'image/6f0f1eb9-da04-462b-8133-505ca9df867e.jpg'),(23,'【作りたて】大切り　極み熟成　まぐろ',0,1,165,'image/c1e95ba5-586e-407a-9b9f-83fdb16dc24b.jpg'),(24,'【作りたて】サーモンアボカド',0,1,165,'image/047ff3b3-d3b1-4fb4-a38d-ed91272e5fec.jpg'),(25,'【作りたて】えびアボカド',0,1,165,'image/e8bfe4f4-38ee-40c2-a46e-7310490586c2.jpg'),(26,'【作りたて】大切り　極み熟成　漬けまぐろ',0,1,165,'image/669dba9e-cd3f-4522-a30c-c9d23e8035d4.jpg'),(27,'【作りたて】大切り　はまち',0,1,165,'image/b4e0a45c-7025-478a-b550-8898fa95d2d9.jpg'),(28,'【炙りたて】Wチーズ豚カルビ',0,1,165,'image/c1e53639-6e67-4d23-ad67-0b7452d90b05.jpg'),(29,'【炙りたて】Wチーズえび',0,1,165,'image/cc920ac7-3857-4610-8607-a1fafe359a91.jpg'),(30,'【炙りたて】Wチーズサーモン',0,1,165,'image/9ec03997-86c9-41a3-875f-24d30909a2f2.jpg'),(31,'【炙りたて】Wチーズえびマヨ',0,1,165,'image/d3882c65-4f30-4cbf-a1a1-956c0c337d43.jpg'),(32,'【揚げたて】いか天にぎり',0,1,165,'image/dca75815-c869-4d98-a6c4-b130245fc401.jpg'),(33,'あぶりえびチーズ',0,1,115,'image/80468820-52aa-4f51-a970-23c61f95a440.jpg'),(34,'あぶりチーズサーモン',0,1,115,'image/ce6284a0-4340-42e7-af6a-11c27dfd4112.jpg'),(35,'あぶりチーズ豚カルビ',0,1,115,'image/26c7c1ef-275c-44ab-9c86-e16892bfb809.jpg'),(36,'あぶりえびマヨグラタン風',0,1,115,'image/ab682e5c-89e2-4560-9540-f92b7ea1d352.jpg'),(37,'極み熟成　まぐろ',0,1,115,'image/adb72b5e-60f0-49c9-b7f1-7c5f8f9c9609.jpg'),(38,'極み熟成 漬けまぐろ',0,1,115,'image/8093c03e-0b39-4680-bfc9-5cd512f6c2b2.jpg'),(39,'極み熟成　漬けはまち',0,1,115,'image/fac708c1-5261-4e45-84ae-af4e166a0b95.jpg'),(40,'極み漬けびんちょう',0,1,115,'image/c84750be-694f-44fa-ab28-861f70d1db5f.jpg'),(41,'ゆず塩かつおたたき',0,1,115,'image/b475a84e-51ca-42be-9597-505bf8e03c5e.jpg'),(42,'ねぎ塩貝柱にぎり',0,1,115,'image/9ef41cd3-71e0-4b2a-89df-ae9cf34d547b.jpg'),(43,'ほたるいか沖漬け',0,1,115,'image/303a3763-b372-4802-a490-2bfda1dd71a2.jpg'),(44,'はまち',0,1,115,'image/19be8059-cd42-401f-bb29-f2557a6dc3dd.jpg'),(45,'サーモン',0,1,115,'image/2c8b8f38-593d-426a-99b9-a588827ad0b2.jpg'),(46,'とろサーモン',0,1,115,'image/c9f07f37-6873-432f-b7b7-fab70f4bf5a8.jpg'),(47,'焼きはらす',0,1,115,'image/99307fac-ab50-4b84-8bcb-6565193cd92d.jpg'),(48,'えび',0,1,115,'image/f28e50fa-4586-470c-8eee-aa2e34c849e6.jpg'),(49,'生えび',0,1,115,'image/f7ced4d5-b181-4900-ad1b-441699196524.jpg'),(50,'甘えび',0,1,115,'image/33bc4f66-2b22-460f-995b-522256b01c99.jpg'),(51,'肉厚とろ〆さば',0,1,115,'image/a6a3adf0-a1a0-4bb1-a652-b962006253a1.jpg'),(52,'真いわし',0,1,115,'image/ee7a4eea-269d-4fb8-b1d3-66390196ca2a.jpg'),(53,'大葉真いか',0,1,115,'image/23aef67e-13b9-4cb3-b4c1-c675a0fc39f9.jpg'),(54,'やりいか',0,1,115,'image/f4ec5c06-a677-4784-8499-b6a197760617.jpg'),(55,'あなご',0,1,115,'image/b17a44c2-284d-4e91-a2e6-a3c4f10ec551.jpg'),(56,'つぶ貝',0,1,115,'image/0c3580f4-6fe1-4478-9e74-25fa80beca44.jpg'),(57,'赤貝',0,1,115,'image/5ec1c132-aa8d-4057-b040-6100e5915e8f.jpg'),(58,'かれい昆布締め　えんがわ添え',0,1,115,'image/1231c6cb-22e7-4a1a-9883-c262c056d145.jpg'),(59,'たまご焼き',0,1,115,'image/966cd233-3ad2-4956-a6b6-21560bbf3731.jpg'),(60,'旨だれ牛カルビ',0,1,115,'image/70654056-9118-4895-ba32-e4ba0b7b69c6.jpg'),(61,'ハンバーグ',0,1,115,'image/461a8a6a-30b4-4cdc-9fd4-2a9d8dbfcbdc.jpg'),(62,'あわびにぎり',0,1,250,'image/f09540ab-30fc-41c2-9650-3424a522586f.jpg'),(63,'国産　絶品真ハタ　塩レモン',0,1,250,'image/5af6b2b8-b7e4-4606-89e9-8f91dc19de62.jpg'),(64,'大切り　あぶりとろサーモン　ガーリックチーズ',0,1,165,'image/d710a11e-f85c-4fa5-bb9f-ccfeca302272.jpg'),(65,'Wチーズベーコン',0,1,165,'image/354af619-e0a7-4c0c-9f31-462b5bb862fe.jpg'),(66,'あぶり　天然　ぶり照りマヨ',0,1,165,'image/f9cb0e4c-6de5-402e-88f5-2b3ba0174120.jpg'),(67,'えび　すだちクリーム',0,1,165,'image/d2e10a4e-a57a-4883-b5ef-22ec6f13a1a0.jpg'),(68,'サーモン　すだちクリーム',0,1,165,'image/1f54d44f-4c39-427c-970c-fc4d33b9278e.jpg'),(69,'ローストビーフ　たっぷり野菜　',0,1,165,'image/5afd6c7d-483f-4ae4-a1aa-377701a51912.jpg'),(70,'真いか　たっぷり野菜',0,1,165,'image/fa0a36ca-c774-450e-a38f-aceb37674ff2.jpg'),(71,'ビントロ',0,1,165,'image/65011f28-d1ea-4b00-983c-967afab8bd4c.jpg'),(72,'オニオンサーモン',0,1,165,'image/88368c60-5c43-4eb2-832e-103dc7f5b892.jpg'),(73,'真たこ',0,1,165,'image/2370246c-7ba9-420e-97f9-fdb6fd538438.jpg'),(74,'生たこ',0,1,165,'image/fde04ced-6ff5-4fd9-9b48-1c9f9cf132e1.jpg'),(75,'大葉生たこ',0,1,165,'image/cc799530-3331-42eb-a3e0-3c6c020a2c46.jpg'),(76,'えんがわ（かれい）',0,1,165,'image/5931ad53-80a2-4bb3-900d-dba9dcd373e4.jpg'),(77,'えび天にぎり',0,1,165,'image/4610485b-ae03-499f-9559-ae7149e05f64.jpg'),(78,'極み熟成　真鯛',0,1,250,'image/147ab1cb-d0d3-4986-8b8d-44f0099ae183.jpg'),(79,'極み熟成ふぐ　ジュレポン酢',0,1,250,'image/3f0ee19f-d676-4b4f-9a33-120d95328e96.jpg'),(80,'ほたてにぎり',0,1,250,'image/ed1f84c5-f60f-44f2-aaf4-d92c626b3e88.jpg'),(81,'赤えび（一貫）',0,1,115,'image/3d2c8be8-3488-4bc7-bee7-37dec53dca32.jpg'),(82,'大切り漬けサーモン（一貫）',0,1,115,'image/7ec4314a-0c11-41e9-9055-717a486ad218.jpg'),(83,'とろける上穴子天にぎり（一貫）',0,1,165,'image/9c2d5d1b-b93a-443c-b76c-d5f8de24f8ac.jpg'),(84,'絆　真鯛　塩〆炙り（一貫）',0,1,165,'image/170f8cce-668b-4826-8b58-5a85bfd81bc6.jpg'),(85,'大切り　生サーモン（一貫）',0,1,165,'image/930a4f69-586f-4d0c-b298-aab82d275476.jpg'),(86,'大切り　漬け生サーモン（一貫）',0,1,165,'image/d8cc153b-21fc-4276-85c5-5df66d0eed50.jpg'),(87,'明太だし巻きにぎり',0,1,165,'image/e2406dd4-5b59-4159-b129-d03309d7c874.jpg'),(88,'とろける上穴子（一貫）',0,1,165,'image/ad1685da-1645-477c-b566-1b87a9d89792.jpg'),(89,'極み熟成 中とろ（一貫）',0,1,250,'image/fb29a943-eab9-432c-8c42-e03c592c5eb8.jpg'),(90,'極み熟成　あぶり中とろ（一貫）',0,1,250,'image/e64d64b1-ac34-4bde-aeb2-3a3f899c2a6e.jpg'),(91,'特大切り　うな丼にぎり(一貫)',0,1,345,'image/239195e9-94b6-4e48-beb1-6b08028627f8.jpg'),(92,'あぶり大とろ一貫',0,1,345,'image/6fff7f8f-47b1-4ee4-95af-e50ad71a8782.jpg'),(93,'【巻きたて】海鮮うに手巻き（一貫）',0,1,165,'image/8a8892a1-3381-4709-8cd5-0b71a7347aa2.jpg'),(94,'【巻きたて】ねぎまぐろ手巻き（一貫）',0,1,165,'image/169bb6ff-3134-40f3-89e9-5d87925b633e.jpg'),(95,'【巻きたて】たっぷりいくら軍艦',0,1,165,'image/b3b4887a-6d1c-475c-a883-c941dbe03c0e.jpg'),(96,'【巻きたて】ゆず漬けまぐろ手巻き（一貫）',0,1,165,'image/7b826d54-b1ae-45c1-a059-1fff7e1717dc.jpg'),(97,'【巻きたて】海鮮盛り手巻き（一貫）',0,1,165,'image/1a039549-e16a-4baa-8b7f-0b1cf5a051af.jpg'),(98,'明太まぐろ手巻き（一貫）',0,1,165,'image/e45d99c6-ff6f-4a56-a251-dbf7d4653c9c.jpg'),(99,'【巻きたて】えび天手巻き（一貫）',0,1,165,'image/556cf4cd-ac19-46d1-91d1-b249ccf3dbdd.jpg'),(100,'【巻きたて】えびいか天手巻き（一貫）',0,1,165,'image/3285cd40-2213-4089-b72d-d17290b878f7.jpg'),(101,'いかおくら',0,1,115,'image/d76e1030-0d08-4137-8b8b-ef393efd4522.jpg'),(102,'大盛　げそ軍艦',0,1,115,'image/d3c3e309-bc80-434c-b546-8f634ab51ab5.jpg'),(103,'とろけるはまち軍艦',0,1,115,'image/b1dfff11-93dc-40e4-9fd1-1c53a27caf3d.jpg'),(104,'かにみそ',0,1,115,'image/afe99d73-04ec-4a4d-ae00-f81645d3fa11.jpg'),(105,'たらマヨ軍艦',0,1,115,'image/340cf2c2-2ff6-4d5d-9811-239d6e2cd26f.jpg'),(106,'牛すき焼き風軍艦',0,1,115,'image/7bac7f31-dc28-4fa5-be15-1a613247a45c.jpg'),(107,'ねぎまぐろ',0,1,115,'image/4399cd8e-7def-41a7-bfaf-d2415ead2c93.jpg'),(108,'コーン',0,1,115,'image/cf19b80f-69d4-45fa-b6e1-bfb2b8515794.jpg'),(109,'まぐろユッケ',0,1,115,'image/9429d735-8054-4de6-922c-beb01797a034.jpg'),(110,'納豆',0,1,115,'image/01b82671-6e23-4824-9628-49152dd7b2b7.jpg'),(111,'えびマヨ',0,1,115,'image/dcea37f5-32c8-4310-babe-2285f2344d86.jpg'),(112,'サラダ',0,1,115,'image/3a67ad00-3f0a-4206-a6e1-e7e04d67cafc.jpg'),(113,'ツナサラダ',0,1,115,'image/88eeb09a-ae95-493a-b66f-b538d2ae410c.jpg'),(114,'シーフードサラダ',0,1,115,'image/02a54955-7f21-4818-9009-34eeb02474c6.jpg'),(115,'味玉',0,1,115,'image/5472ee35-f9c6-46bc-8315-aaf8c577054b.jpg'),(116,'納豆巻',0,1,115,'image/dbc3bf88-60ae-4d7d-bb73-4435f1925051.jpg'),(117,'きゅうり巻',0,1,115,'image/bcb750fa-baaa-4b34-b357-795bc7d1eae0.jpg'),(118,'かんぴょう巻',0,1,115,'image/b0c63fd6-672e-40f8-9207-730c12e91a24.jpg'),(119,'いなり',0,1,115,'image/9d21af89-70da-4916-bd43-9a12d1c66753.jpg'),(120,'たら白子ジュレポン酢軍艦',0,1,165,'image/e5a1d824-1254-468f-bfb2-09bd185143eb.jpg'),(121,'いかフライ手巻き（一貫）',0,1,165,'image/e188fdf2-0847-4c02-be18-ac51112c8233.jpg'),(122,'鉄火巻',0,1,165,'image/c38bf2c0-c28b-43c1-ae14-b1f05b6d7ed9.jpg'),(123,'特盛　まぐろ軍艦',0,1,250,'image/a0f8beb1-2a77-43e3-963f-d9091afacd9b.jpg'),(124,'ビッくらポン！人気にぎりセット',0,1,680,'image/ae328681-2b2a-4aed-b9d2-f6c40968f863.jpg'),(125,'ビッくらポン！人気軍艦セット',0,1,680,'image/c9a1b549-3fca-406d-92e9-654e11319d56.jpg'),(126,'旬の海鮮丼　平日限定17時まで',0,1,500,'image/4f2e61bf-7a00-4ef6-ac26-ac7f88cfac7d.jpg'),(127,'えび天と季節の天丼　平日限定17時まで',0,1,500,'image/94ced785-7718-4ad0-bb20-ef65846aafe8.jpg'),(128,'特上うな丼　平日限定17時まで',0,1,1000,'image/e089a2c0-cfe4-49c3-a129-d777c4e73705.jpg'),(129,'イベリコ豚うどん',0,1,450,'image/0dc6c9d2-8f01-427d-bd10-58288b385751.jpg'),(130,'北海道名産　濃厚味噌バターコーンらーめん',0,1,450,'image/b981b883-610f-4d59-a568-aef35d5f1612.jpg'),(131,'北海道名産　濃厚味噌バターコーンらーめん',0,1,450,'image/e207cf4b-8593-4b3d-92dd-8ab7427ce0bb.jpg'),(132,'7種の魚介 追いかつお醤油らーめん（関西）',0,1,450,'image/62f52fdd-6de7-42db-848f-efe5dee1eeb4.jpg'),(133,'7種の魚介 追いかつお醤油らーめん（関東）',0,1,450,'image/46d0ce8b-f3ea-4fa7-9e87-8d58ce0d60dc.jpg'),(134,'7種の魚介 濃厚味噌らーめん（関西）',0,1,450,'image/a60c8183-360a-4286-9bef-34d8541d236f.jpg'),(135,'7種の魚介 濃厚味噌らーめん（関東）',0,1,450,'image/f47e91cb-2b79-4805-8a61-bd8198884532.jpg'),(136,'胡麻香る担々麺',0,1,450,'image/8666ca14-4573-46b0-806c-1cb3e12c7ad5.jpg'),(137,'かけうどん（平日限定）',0,1,165,'image/8935cd78-0437-410f-8902-c2fd4f507095.jpg'),(138,'きつねうどん',0,1,360,'image/e397f59e-897f-43e5-8e3d-ff972f13f156.jpg'),(139,'えび天うどん',0,1,360,'image/c2f1d0d5-4254-453f-b7df-b12ff07e5bf9.jpg'),(140,'あさり入り 味噌汁',0,1,230,'image/6e8a48fb-99cb-44ab-944e-d8fc7bb261c6.jpg'),(141,'あさり入り 赤だし',0,1,230,'image/7c7734fd-5fdb-42c2-ab12-b1c4fde20b48.jpg'),(142,'あおさ入り 味噌汁',0,1,200,'image/d56e7f2a-7aa1-4469-9b5b-2c591f4d2a82.jpg'),(143,'あおさ入り 赤だし',0,1,200,'image/ae720bf2-1563-40df-842f-7e09a920e312.jpg'),(144,'特製茶碗蒸し',0,1,200,'image/5b608c26-7706-44f6-a777-2079f8e751eb.jpg'),(145,'くら出汁',0,1,115,'image/9fd671fd-1369-4cfd-bda6-3d31ac5b0a94.jpg'),(146,'えびブロッコリーサラダ',0,1,165,'image/1610fa84-f4a8-4363-9eac-3887d4192d67.jpg'),(147,'くらポテト',0,1,190,'image/9d5beb67-4081-4f70-bbf4-c6ceb2e03fcc.jpg'),(148,'伝説の鶏唐揚げ',0,1,360,'image/c0a517da-ee41-4509-a6fd-fe07f65f6009.jpg'),(149,'オニオンリング',0,1,115,'image/9ec5cde4-2e20-41e3-8f69-5bbd5f91348f.jpg'),(150,'とうもろこしのかき揚げ',0,1,115,'image/97c5d369-ce7f-4751-b90c-6c4f1ae99c8b.jpg'),(151,'ミニころチキン',0,1,115,'image/375ec384-b1cf-47ab-adc4-916c87143614.jpg'),(152,'オリオンドラフト＜生ビール＞',0,1,500,'image/3d0e0f02-adb5-49f1-9854-f64698a80977.jpg'),(153,'生ビール',0,1,550,'image/e478df33-7f2e-4926-856d-f9251318ddc1.jpg'),(154,'瓶ビール',0,1,610,'image/1b8c7418-5c04-4984-a402-28ad8cdea7dd.jpg'),(155,'ドライゼロα（ノンアルコールビ ール）',0,1,390,'image/5262c536-e8b4-4521-b25f-02d504881982.jpg'),(156,'冷酒無添蔵',0,1,610,'image/d22a626c-c07c-4fbf-b6cb-455f8032d24c.jpg'),(157,'ハイボール',0,1,420,'image/fb57f77b-a597-41f7-952d-2867176593a2.jpg'),(158,'ペールエール（クラフトビール）',0,1,660,'image/7a9952d6-be7a-4ea9-855a-f2692f607834.jpg'),(159,'BT21　　和菓子　KOYA（コヤ）　こし餡',0,1,300,'image/f43aa99a-4aac-4cff-92ae-bc7de53ccf95.jpg'),(160,'BT21　　和菓子　RJ（アールジェイ)　こし餡',0,1,300,'image/ce2e2fe3-922c-4a3f-a67b-e4351bca1eae.jpg'),(161,'BT21　　和菓子　SHOOKY（シュッキー）　チョコレート餡',0,1,300,'image/1953bd10-6f1f-46fc-97fa-32739f1cf631.jpg'),(162,'BT21　和菓子　MANG（マン）　チョコレート餡',0,1,300,'image/5aecd655-4b86-4dce-80a1-a5c7e2870115.jpg'),(163,'BT21　　和菓子　CHIMMY（チミー）　チョコレート餡',0,1,300,'image/ade32e3a-49a7-47c4-b302-bcb698299214.jpg'),(164,'BT21　　和菓子　TATA（タタ）　いちご餡',0,1,300,'image/9e2ee884-d52b-4e23-a47a-7b0a97184e8d.jpg'),(165,'BT21　　和菓子COOKY（クッキー）　いちご餡',0,1,300,'image/07b72dea-aabc-46d4-b055-eb84c61be333.jpg'),(166,'キャラメルモンブランパフェ',0,1,640,'image/bb2e51e2-fad2-4cb1-8595-023bdc83317b.jpg'),(167,'揚げたい焼き',0,1,115,'image/8bd9a895-59e5-474b-a1f7-1670f17e8c70.jpg'),(168,'イタリアンティラミス',0,1,250,'image/2b834f28-7b54-4f2d-b6d2-f9f8da485888.jpg'),(169,'ヴィクトリアケーキ',0,1,250,'image/b794627d-4943-4de2-81eb-cfc0797613c8.jpg'),(170,'いちごのホワイトアイスケーキ',0,1,250,'image/fd4e9a0f-7462-4e0f-953d-f3ed6aa11cb9.jpg'),(171,'揚げたて豆乳ドーナツ',0,1,360,'image/fe720b6c-cd7b-482c-b6ed-82034fc62e22.jpg'),(172,'塩豆大福',0,1,115,'image/0263889d-adc3-45cc-9a1b-59e277edb9de.jpg'),(173,'カットパイン',0,1,115,'image/635bb75f-64c3-467b-9a9f-9b64f7ba633e.jpg'),(174,'北海道みるくのプリンタルト',0,1,115,'image/066ee2ab-745a-4e5c-8282-d11117a037be.jpg'),(175,'北海道みるくシューアイス',0,1,115,'image/d30e8aa9-29d3-4668-a186-67a93f52fb57.jpg'),(176,'チョコケーキ',0,1,115,'image/73a0aff2-f552-4dc5-80d3-aac9ec89b723.jpg'),(177,'チーズケーキ',0,1,115,'image/9251fab8-2850-461b-b264-beeacbbc5da7.jpg'),(178,'ミルクレープ',0,1,250,'image/b32209da-98ef-44ba-8f1e-7cfe60f30276.jpg'),(179,'大学芋スティック',0,1,115,'image/64ec5051-d3ef-4267-88c3-52bc6695cc15.jpg'),(180,'京わらびもち',0,1,115,'image/5624e89c-09cc-4be9-97b1-2c0ea24714f1.jpg'),(181,'バニラアイス',0,1,115,'image/879b8965-4519-48be-883c-0e4c687c0a31.jpg'),(182,'チョコアイス',0,1,115,'image/a8be9d7a-4a7f-45ef-a900-9cff0a4fade3.jpg'),(183,'豆乳アイス',0,1,115,'image/1591260a-3c6a-410a-9732-482fdaa25858.jpg'),(184,'巨峰シャーベット',0,1,115,'image/c3954d70-c499-474f-ac1e-a174079b8998.jpg'),(185,'完熟マンゴー',0,1,360,'image/af919808-7a34-4542-b0f8-2be31c7ca188.jpg'),(186,'乳酸菌ウォーター',0,1,115,'image/4159693a-337f-46c1-ad8b-56e80e7d18a8.jpg'),(187,'オレンジ・みかんジュース',0,1,200,'image/47bd4883-e5a3-4807-b164-235b998028f6.jpg'),(188,'りんごジュース',0,1,200,'image/f9458815-ef57-4f35-ad79-bd7a3eea38eb.jpg'),(189,'宇治抹茶入り緑茶',0,1,115,'image/985cc402-3985-4edc-b742-2f312dc1efef.jpg'),(190,'プレミアホット珈琲',0,1,150,'image/6e23e091-e6f9-4420-ba1f-ae4a1b7bd3ba.jpg'),(191,'プレミアアイス珈琲',0,1,150,'image/7f00d4be-de83-4eaa-bf7d-7973b59fc24f.jpg'),(192,'プレミアホットラテ',0,1,180,'image/96310644-48b7-42b7-87cb-b19aa71f1885.jpg'),(193,'プレミアアイスラテ',0,1,180,'image/c4004162-7bea-44bf-b6a3-a4154bc1178a.jpg');
+/*!40000 ALTER TABLE `menues` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_history`
+--
+
+DROP TABLE IF EXISTS `order_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_history` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(20) NOT NULL,
+  `menu_id` bigint NOT NULL,
+  `store_id` bigint NOT NULL,
+  `order_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `menu_id` (`menu_id`),
+  KEY `store_id` (`store_id`),
+  CONSTRAINT `order_history_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `order_history_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`),
+  CONSTRAINT `order_history_ibfk_4` FOREIGN KEY (`menu_id`) REFERENCES `menues` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_history`
+--
+
+LOCK TABLES `order_history` WRITE;
+/*!40000 ALTER TABLE `order_history` DISABLE KEYS */;
+INSERT INTO `order_history` VALUES (1,'user1',25,1,'2022-10-22 02:38:10'),(2,'user1',26,1,'2022-10-22 02:38:11'),(3,'user1',27,1,'2022-10-22 02:38:11'),(4,'user1',28,1,'2022-10-22 02:38:11'),(5,'user1',29,1,'2022-10-22 02:38:11'),(6,'user1',30,1,'2022-10-22 02:38:11'),(7,'user1',31,1,'2022-10-22 02:38:11'),(8,'user1',32,1,'2022-10-22 02:38:11'),(9,'user1',33,1,'2022-10-22 02:38:11'),(10,'user1',34,1,'2022-10-22 02:38:11'),(11,'user1',35,1,'2022-10-22 02:38:11'),(12,'user1',36,1,'2022-10-22 02:38:11'),(13,'user1',37,1,'2022-10-22 02:38:11'),(14,'user1',38,1,'2022-10-22 02:38:11'),(15,'user1',39,1,'2022-10-22 02:38:11'),(16,'user1',40,1,'2022-10-22 02:38:11'),(17,'user1',41,1,'2022-10-22 02:38:11'),(18,'user1',42,1,'2022-10-22 02:38:11'),(19,'user1',43,1,'2022-10-22 02:38:11'),(20,'user1',44,1,'2022-10-22 02:38:11'),(21,'user1',45,1,'2022-10-22 02:38:11'),(22,'user1',46,1,'2022-10-22 02:38:11'),(23,'user1',47,1,'2022-10-22 02:38:11'),(24,'user1',48,1,'2022-10-22 02:38:11'),(25,'user1',49,1,'2022-10-22 02:38:11'),(26,'user1',50,1,'2022-10-22 02:38:11'),(27,'user1',51,1,'2022-10-22 02:38:11'),(28,'user1',52,1,'2022-10-22 02:38:11'),(29,'user1',53,1,'2022-10-22 02:38:11'),(30,'user1',54,1,'2022-10-22 02:38:11'),(31,'user1',55,1,'2022-10-22 02:38:11'),(32,'user1',56,1,'2022-10-22 02:38:11'),(33,'user1',57,1,'2022-10-22 02:38:11'),(34,'user1',58,1,'2022-10-22 02:38:11'),(35,'user1',59,1,'2022-10-22 02:38:11'),(36,'user2',10,1,'2022-10-22 02:38:40'),(37,'user2',11,1,'2022-10-22 02:38:40'),(38,'user2',12,1,'2022-10-22 02:38:40'),(39,'user2',13,1,'2022-10-22 02:38:40'),(40,'user2',14,1,'2022-10-22 02:38:40'),(41,'user2',15,1,'2022-10-22 02:38:40'),(42,'user2',16,1,'2022-10-22 02:38:40'),(43,'user2',17,1,'2022-10-22 02:38:40'),(44,'user2',18,1,'2022-10-22 02:38:40'),(45,'user2',19,1,'2022-10-22 02:38:40'),(46,'user2',20,1,'2022-10-22 02:38:40'),(47,'user2',21,1,'2022-10-22 02:38:40'),(48,'user2',22,1,'2022-10-22 02:38:40'),(49,'user2',23,1,'2022-10-22 02:38:40'),(50,'user2',24,1,'2022-10-22 02:38:40'),(51,'user2',25,1,'2022-10-22 02:38:40'),(52,'user2',26,1,'2022-10-22 02:38:40'),(53,'user2',27,1,'2022-10-22 02:38:40'),(54,'user2',28,1,'2022-10-22 02:38:40'),(55,'user2',29,1,'2022-10-22 02:38:40');
+/*!40000 ALTER TABLE `order_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stores`
+--
+
+DROP TABLE IF EXISTS `stores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `stores` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `image_url` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stores`
+--
+
+LOCK TABLES `stores` WRITE;
+/*!40000 ALTER TABLE `stores` DISABLE KEYS */;
+INSERT INTO `stores` VALUES (1,'寿司','image/ce1c12e6-8ba8-4486-946b-a9f9e35c9ca1.png'),(2,'ファミリーレストラン','image/7d83474c-890d-48b4-9675-387a8757886b.png'),(3,'カレー','image/16df185c-ece5-4355-8e43-cd743c85cc0b.png'),(4,'ラーメン','image/a3f5f7c0-c505-4fba-8010-b8514aea5057.png'),(5,'ドーナツ','image/cb32f13d-984b-4a1f-948f-023251c13931.png'),(6,'牛丼','image/f56623ab-d29c-405a-b1b3-737c7b0860e6.png');
+/*!40000 ALTER TABLE `stores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('user1'),('user2'),('user3'),('user4'),('user5'),('user6'),('user7'),('user8'),('user9');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-10-22  6:46:33
