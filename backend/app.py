@@ -83,7 +83,7 @@ def menues():
             return "0"
 
         cs = mysql.connection.cursor()
-        cs.execute("insert into come_history(user_id,menu_id) values(\'%s\',\'%s\')"%(user_id,menu_id))
+        cs.execute("insert into order_history(user_id,menu_id) values(\'%s\',\'%s\')"%(user_id,menu_id))
         mysql.connection.commit()
         
         # 完了に応じた番号（値）を戻り値にする
