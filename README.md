@@ -6,7 +6,7 @@
 開発物 URL:
 http://itoho.ddns.net/login
 
-概要動画 URL:
+概要動画 URL:https://www.youtube.com/watch?v=3Ncg21yXcYQ&ab_channel=ixa
 
 
 ## 製品概要
