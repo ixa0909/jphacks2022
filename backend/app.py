@@ -139,7 +139,7 @@ def get_history():
     # 注文の履歴
     cs.execute("SELECT * FROM order_history where store_id = \'%s\'"%str(store_id))
     order_history = cs.fetchall()
-    return jsonify({"store_history":store_history,"order_history":order_history})
+    return jsonify(order_history)
         
 # # 履歴を表示
 # @app.route('/api/recommend',methods=["POST"])
