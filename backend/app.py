@@ -120,9 +120,9 @@ def check_complete():
     count_food = count_food["count(id)"]
 
     if check:
-        return jsonify({"complete":str(100*check//count_food)+"%"})
+        return jsonify({"complete":str(100-100*check//count_food)+"%"})
     else:
-        return jsonify({"complete":str(100*check//count_food)+"%"})
+        return jsonify({"complete":str(100-100*check//count_food)+"%"})
     
 # 履歴を表示
 @app.route('/api/history',methods=["GET"])
