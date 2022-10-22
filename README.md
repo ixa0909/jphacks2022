@@ -1,6 +1,6 @@
 # <u>Complete Menu!</u>
 <p align="center">
-<img src = ./imageForREADME/app.png style ="width:266pt;height:auto;"/>
+<img src = ./imageForREADME/app.png style ="width:506pt;height:auto;"/>
 </p>
 
 開発物 URL:
