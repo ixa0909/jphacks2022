@@ -151,7 +151,7 @@ export default class Shops extends Component{
         <div style={wrapperDiv} />
         <div style={regularDiv}>
         <Grid container alignItems='center' justifyContent='center'>
-          <Grid item xs={4} style={{textAlign:"center"}}>
+          <Grid item xs={6} style={{textAlign:"center"}}>
           <Card variant="outlined" style={{backgroundColor: "yellow"}}>
             <Link to="/shop">
               <CardContent>
@@ -162,20 +162,9 @@ export default class Shops extends Component{
               </Link>
               </Card>
           </Grid>
-          <Grid item xs={4} style={{textAlign:"center"}}>
+          <Grid item xs={6} style={{textAlign:"center"}}>
           <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/menues">
-              <CardContent>
-              
-              <h1 >商品一覧</h1>
-             
-              </CardContent>
-              </Link>
-              </Card>
-          </Grid>
-          <Grid item xs={4} style={{textAlign:"center"}}>
-          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/login">
+            <Link to="/history?shop_id=1">
               <CardContent>
               
               <h1 >履歴</h1>

@@ -22,12 +22,11 @@ const Neomenu = () => {
     const handleClickOpen = (mid,mname) => {
       setSelectmenuid(mid);
       setSelectmenuname(mname);
-      if(checkcomplete){
-        window.location.href="/complete";
-      }
       setOpen(true);
     };
 
+
+  
     
 
     const handleClose = () => {
@@ -35,6 +34,20 @@ const Neomenu = () => {
     };
 
     const okhandleClose = () => {
+      axios.post("http://itoho.ddns.net/api/check_complete" ,{user_id:localStorage.getItem("userid"),store_id:query.get("shopid")})
+        .then(res => {
+          console.log(res.data);
+          if(res.data=="100%"){
+            window.setTimeout(forcelateupdate,2000);
+          }
+          setOpen(false);
+          
+      })
+
+        
+    
+
+
       axios.post("http://itoho.ddns.net/api/menues" ,{menu_id: selectmenuid,user_id:localStorage.getItem("userid"),store_id:query.get("shopid")})
         .then(res => {
           console.log({menu_id: selectmenuid,user_id:localStorage.getItem("userid")});
@@ -55,15 +68,14 @@ const Neomenu = () => {
     
       
   
-      axios.get("http://itoho.ddns.net/api/menues?store_id=" + query.get("shopid")+"&user_id="+localStorage.getItem("userid"))
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-          
-          sessionStorage.setItem('menulist',JSON.stringify(res.data));
+    axios.get("http://itoho.ddns.net/api/menues?store_id=" + query.get("shopid")+"&user_id="+localStorage.getItem("userid"))
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+        sessionStorage.setItem('menulist',JSON.stringify(res.data));
 
-          
-        })
+        
+      })
     
     
 
@@ -102,19 +114,6 @@ const Neomenu = () => {
 
     const [menulist, setMenulist] = useState(menulistjson)
 
-    const checkcomplete=() =>{
-      if(sessionStorage.getItem("menulist")!==null){
-        var count=true;
-        menulist["menues"].forEach(element => {
-          if(element.already===false){
-            count=false;
-          }
-        });
-        return count;
-      }
-      return false;
-      
-    }
 
 
     menulistjson=[
@@ -208,7 +207,7 @@ const Neomenu = () => {
 
     return (
      <div>
-      <Grid container style={{padding:"20px"}} spacing={2} alignItems='center' justifyContent='center'>
+      <Grid container style={{padding:"20px"}} spacing={2} alignItems='center'>
           <Grid item xs={12} style={{textAlign:"center", fontSize:"150%"}}>
               <h1>メニューー覧</h1>
           </Grid>
@@ -319,7 +318,7 @@ const Neomenu = () => {
         <div style={wrapperDiv} />
         <div style={regularDiv}>
         <Grid container alignItems='center' justifyContent='center'>
-          <Grid item xs={4} style={{textAlign:"center"}}>
+          <Grid item xs={6} style={{textAlign:"center"}}>
           <Card variant="outlined" style={{backgroundColor: "yellow"}}>
             <Link to="/shop">
               <CardContent>
@@ -330,20 +329,10 @@ const Neomenu = () => {
               </Link>
               </Card>
           </Grid>
-          <Grid item xs={4} style={{textAlign:"center"}}>
+        
+          <Grid item xs={6} style={{textAlign:"center"}}>
           <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/menues">
-              <CardContent>
-              
-              <h1 >商品一覧</h1>
-             
-              </CardContent>
-              </Link>
-              </Card>
-          </Grid>
-          <Grid item xs={4} style={{textAlign:"center"}}>
-          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/login">
+            <Link to="/history?shop_id=1">
               <CardContent>
               
               <h1 >履歴</h1>
