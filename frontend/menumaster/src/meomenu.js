@@ -52,6 +52,7 @@ const Neomenu = () => {
           console.log(res.data);
           if(res.data=="100%"){
             window.setTimeout(forcelateupdate,2000);
+            window.location.href="/complete";
           }
           setOpen(false);
 
