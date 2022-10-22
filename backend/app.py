@@ -57,8 +57,9 @@ def menues():
             req = request.args
             store_id = req.get("store_id")
             user_id = req.get("user_id")
-        except:
-            return "0"
+        except: 
+            store_id = "1"
+            user_id = "user1"
 
         cs = mysql.connection.cursor()
         cs.execute("SELECT * FROM menues where store_id=\'%s\'"%store_id)
