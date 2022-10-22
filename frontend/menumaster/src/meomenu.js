@@ -182,8 +182,8 @@ const Neomenu = () => {
 
     let checkbox = {
       position:"absolute",
-      top:"25px",
-      left:"25px"
+      top:"0px",
+      left:"0px"
     }
 
     const lateupdate=function(){
@@ -238,8 +238,8 @@ const Neomenu = () => {
             {menulist["recommend"].map((menu,index) =>
             <Grid item xs={6} md={4} key={menu.id+"rec"}>
 
-              <Card variant="outlined" >
-              <CardContent style={{position:"relative"}}>
+              <Card variant="outlined" style={{position:"relative"}}>
+              <CardContent >
                 <CardMedia
                   component="img"
                   height="194"
@@ -277,7 +277,7 @@ const Neomenu = () => {
             <Grid item xs={6} md={4} key={menu.id}>
 
             <Card variant="outlined" >
-              <CardContent >
+              <CardContent style={{position:"relative"}}>
                 <CardMedia
                   component="img"
                   height="194"
