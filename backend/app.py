@@ -15,7 +15,7 @@ def CONNECT_DB_USER():
     # フロントからデータを受け取って挿入と照合したい
     cs = mysql.connection.cursor()
 
-    cs.execute("SELECT id FROM users where id = %s"%user_id)
+    cs.execute("SELECT id FROM users where id = \'%s\'"%user_id)
     data = cs.fetchall()
     if len(data):
         return jsonify({"IsNew": False})
