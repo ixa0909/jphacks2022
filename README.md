@@ -35,7 +35,7 @@
 * データ構造
   データベースの構造を開発で考えるのは初めてだったので特に注力しました。ベースで間違えれば後で修正をするのは大変であると考え参考文献の調査、相談をした上で決定しました。
 <p align="center">
-<img src = ./imageForREADME/database.png style ="width:266pt;height:auto;"/>
+<img src = ./imageForREADME/database.png style ="width:pt;height:auto;"/>
 </p>
 * シンプルな Web アプリケーションの制作
   
