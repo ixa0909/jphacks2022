@@ -22,20 +22,19 @@ const Neomenu = () => {
     const handleClickOpen = (mid,mname) => {
       setSelectmenuid(mid);
       setSelectmenuname(mname);
-      if(checkcomplete){
-        window.location.href="/complete";
-      }
       setOpen(true);
     };
 
-    
+
+
+
 
     const handleClose = () => {
       setOpen(false);
     };
 
-    const okhandleClose = () => {
-      axios.post("http://itoho.ddns.net/api/menues" ,{menu_id: selectmenuid,user_id:localStorage.getItem("userid"),store_id:query.get("shopid")})
+    const okhandleClose = async() => {
+      await axios.post("http://itoho.ddns.net/api/menues" ,{menu_id: selectmenuid,user_id:localStorage.getItem("userid"),store_id:query.get("shopid")})
         .then(res => {
           console.log({menu_id: selectmenuid,user_id:localStorage.getItem("userid")});
           console.log(res);
@@ -43,38 +42,48 @@ const Neomenu = () => {
           sessionStorage.removeItem("menulist");
           setOpen(false);
           window.setTimeout(forcelateupdate,2000);
-          
 
-          
+
+
         })
-      
+
+      await axios.post("http://itoho.ddns.net/api/check_complete" ,{user_id:localStorage.getItem("userid"),store_id:query.get("shopid")})
+        .then(res => {
+          console.log(res.data);
+          if(res.data.complete=="100%"){
+            window.setTimeout(forcelateupdate,2000);
+            window.location.href="/complete";
+          }
+          setOpen(false);
+
+      })
+
     };
 
-    
-    
-    
-      
-  
-      axios.get("http://itoho.ddns.net/api/menues?store_id=" + query.get("shopid")+"&user_id="+localStorage.getItem("userid"))
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-          
-          sessionStorage.setItem('menulist',JSON.stringify(res.data));
 
-          
-        })
-    
-    
+
+
+
+
+    axios.get("http://itoho.ddns.net/api/menues?store_id=" + query.get("shopid")+"&user_id="+localStorage.getItem("userid"))
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+        sessionStorage.setItem('menulist',JSON.stringify(res.data));
+
+
+      })
+
+
 
     console.log(query.get('shopid'));
     let menulistjson="";
-    
+
     if(sessionStorage.getItem('menulist')!==null){
       menulistjson=JSON.parse(sessionStorage.getItem('menulist'));
     }
 
-    
+
 
     for (let key in menulistjson["recommend"]) {
       menulistjson["recommend"][key].already=false;
@@ -96,25 +105,12 @@ const Neomenu = () => {
 
 
 
-    
+
 
     console.debug(menulistjson);
 
     const [menulist, setMenulist] = useState(menulistjson)
 
-    const checkcomplete=() =>{
-      if(sessionStorage.getItem("menulist")!==null){
-        var count=true;
-        menulist["menues"].forEach(element => {
-          if(element.already===false){
-            count=false;
-          }
-        });
-        return count;
-      }
-      return false;
-      
-    }
 
 
     menulistjson=[
@@ -136,20 +132,20 @@ const Neomenu = () => {
       },
     ]
 
-    
 
 
 
 
 
 
-  
+
+
 
     if (localStorage.getItem("userid")==null){
       return (
-        
+
         <Grid container alignItems='center' justifyContent='center' direction="column">
-          
+
           <Link to="/login">
           <Grid item xs={12}>
               <h1>ログインする</h1>
@@ -159,7 +155,7 @@ const Neomenu = () => {
             <p>ログインされていません</p>
           </Grid>
         </Grid>
-        
+
       );
     }
 
@@ -186,8 +182,8 @@ const Neomenu = () => {
 
     let checkbox = {
       position:"absolute",
-      top:"25px",
-      left:"25px"
+      top:"0px",
+      left:"0px"
     }
 
     const lateupdate=function(){
@@ -201,14 +197,14 @@ const Neomenu = () => {
       sessionStorage.setItem("firstupdate","ok");
         window.location.reload();
     }
-    
+
     window.setTimeout(lateupdate,2000);
-    
+
 
 
     return (
      <div>
-      <Grid container style={{padding:"20px"}} spacing={2} alignItems='center' justifyContent='center'>
+      <Grid container style={{padding:"20px"}} spacing={2} alignItems='center'>
           <Grid item xs={12} style={{textAlign:"center", fontSize:"150%"}}>
               <h1>メニューー覧</h1>
           </Grid>
@@ -238,20 +234,20 @@ const Neomenu = () => {
             </DialogActions>
           </Dialog>
 
-          
+
             {menulist["recommend"].map((menu,index) =>
             <Grid item xs={6} md={4} key={menu.id+"rec"}>
 
-              <Card variant="outlined" >
-              <CardContent style={{position:"relative"}}> 
+              <Card variant="outlined" style={{position:"relative"}}>
+              <CardContent >
                 <CardMedia
                   component="img"
                   height="194"
                   image={"/"+menu.image_url}
                   alt="Paella dish"
                 />
-                
-                
+
+
                 <Typography variant="h5" component="div"  style={{textAlign:"center"}}>
                   {menu.name}
                 </Typography>
@@ -266,22 +262,22 @@ const Neomenu = () => {
               {menu.already?
                 <img style={checkbox} height="120px" src='https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2015/04/th_business_icon_ca_124.png?w=860&ssl=1'/>
                 :""
-              
+
               }
               </Card>
 
             </Grid>
             )}
-          
+
           <Grid item xs={12} style={{textAlign:"center"}}>
               <h1 >すべての商品</h1>
           </Grid>
-          
+
           {menulist["menues"].map((menu,index) =>
             <Grid item xs={6} md={4} key={menu.id}>
 
             <Card variant="outlined" >
-              <CardContent >
+              <CardContent style={{position:"relative"}}>
                 <CardMedia
                   component="img"
                   height="194"
@@ -291,7 +287,7 @@ const Neomenu = () => {
                  {menu.already?
                 <img style={checkbox} height="120px" src='https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2015/04/th_business_icon_ca_124.png?w=860&ssl=1'/>
                 :""
-              
+
               }
                 <Typography variant="h5" component="div"  style={{textAlign:"center"}}>
                   {menu.name}
@@ -304,67 +300,57 @@ const Neomenu = () => {
                 <Button variant="outlined" onClick={()=>handleClickOpen(menu.id,menu.name)}>
             食べた
           </Button>
-          
+
               </CardContent>
-              
+
               </Card>
 
             </Grid>
             )}
-          
-          
-          
+
+
+
       </Grid>
       <div style={{height: "200vh"}}>
         <div style={wrapperDiv} />
         <div style={regularDiv}>
         <Grid container alignItems='center' justifyContent='center'>
-          <Grid item xs={4} style={{textAlign:"center"}}>
+          <Grid item xs={6} style={{textAlign:"center"}}>
           <Card variant="outlined" style={{backgroundColor: "yellow"}}>
             <Link to="/shop">
               <CardContent>
-              
+
               <h1 >店舗一覧</h1>
-             
+
               </CardContent>
               </Link>
               </Card>
           </Grid>
-          <Grid item xs={4} style={{textAlign:"center"}}>
+
+          <Grid item xs={6} style={{textAlign:"center"}}>
           <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/menues">
+            <Link to="/history?shop_id=1">
               <CardContent>
-              
-              <h1 >商品一覧</h1>
-             
-              </CardContent>
-              </Link>
-              </Card>
-          </Grid>
-          <Grid item xs={4} style={{textAlign:"center"}}>
-          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/login">
-              <CardContent>
-              
+
               <h1 >履歴</h1>
-             
+
               </CardContent>
               </Link>
               </Card>
           </Grid>
-          
+
         </Grid>
 
         </div>
       </div>
-        
+
       </div>
-      
-      
+
+
   )
 
 
-  
+
 }
 
 export default Neomenu;
