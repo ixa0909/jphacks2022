@@ -3,22 +3,63 @@ import axios from "axios";
 import {Button,Grid,Box,TextField,Card, Typography, CardContent, CardMedia, Fab, Badge } from '@mui/material';
 import {useNavigate,useLocation } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 const Neomenu = () => {
 
     const search = useLocation().search;
 
     const query = new URLSearchParams(search);
     const [userid, setUserid] = useState("")
-    
+    const [selectmenuid, setSelectmenuid] = useState(0)
+    const [selectmenuname, setSelectmenuname] = useState("")
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = (mid,mname) => {
+      setSelectmenuid(mid);
+      setSelectmenuname(mname);
+      if(checkcomplete){
+        window.location.href="/complete";
+      }
+      setOpen(true);
+    };
+
     
 
+    const handleClose = () => {
+      setOpen(false);
+    };
 
-       
+    const okhandleClose = () => {
+      axios.post("http://itoho.ddns.net/api/menues" ,{menu_id: selectmenuid,user_id:localStorage.getItem("userid"),store_id:query.get("shopid")})
+        .then(res => {
+          console.log({menu_id: selectmenuid,user_id:localStorage.getItem("userid")});
+          console.log(res);
+          console.log(res.data);
+          sessionStorage.removeItem("menulist");
+          setOpen(false);
+          window.setTimeout(forcelateupdate,2000);
+          
+
+          
+        })
+      
+    };
+
+    
+    
+    
+      
   
-      axios.post(`http://192.168.0.40/menues`, { user_id:userid, menu_id:query.get("shopid")})
+      axios.get("http://itoho.ddns.net/api/menues?store_id=" + query.get("shopid")+"&user_id="+localStorage.getItem("userid"))
         .then(res => {
           console.log(res);
           console.log(res.data);
+          
           sessionStorage.setItem('menulist',JSON.stringify(res.data));
 
           
@@ -27,14 +68,56 @@ const Neomenu = () => {
     
 
     console.log(query.get('shopid'));
-    let shoplistjson="";
+    let menulistjson="";
     
-    if(sessionStorage.getItem('shoplist')!==null){
-      shoplistjson=JSON.parse(sessionStorage.getItem('shoplist'));
+    if(sessionStorage.getItem('menulist')!==null){
+      menulistjson=JSON.parse(sessionStorage.getItem('menulist'));
     }
 
-    const [shoplist, setShoplist] = useState(shoplistjson)
-    shoplistjson=[
+    
+
+    for (let key in menulistjson["recommend"]) {
+      menulistjson["recommend"][key].already=false;
+      for (let key2 in menulistjson["complete"]) {
+          if(menulistjson["recommend"][key].id==menulistjson["complete"][key2].menu_id){
+          menulistjson["recommend"][key].already=true;
+        }
+      }
+    }
+
+    for (let key in menulistjson["menues"]) {
+      menulistjson["menues"][key].already=false;
+      for (let key2 in menulistjson["complete"]) {
+          if(menulistjson["menues"][key].id==menulistjson["complete"][key2].menu_id){
+          menulistjson["menues"][key].already=true;
+        }
+      }
+    }
+
+
+
+    
+
+    console.debug(menulistjson);
+
+    const [menulist, setMenulist] = useState(menulistjson)
+
+    const checkcomplete=() =>{
+      if(sessionStorage.getItem("menulist")!==null){
+        var count=true;
+        menulist["menues"].forEach(element => {
+          if(element.already===false){
+            count=false;
+          }
+        });
+        return count;
+      }
+      return false;
+      
+    }
+
+
+    menulistjson=[
       {
         "name":"1号店",
         "score":100
@@ -80,8 +163,9 @@ const Neomenu = () => {
       );
     }
 
-    var array=Object.entries(shoplist).map(([key, value]) => ({key, value}))
+    var array=Object.entries(menulist).map(([key, value]) => ({key, value}))
     console.log(array)
+    console.log(menulist["menues"])
     array.sort((a,b)=>b.value.score-a.value.score);
 
     //sticky reyout
@@ -105,7 +189,23 @@ const Neomenu = () => {
       top:"25px",
       left:"25px"
     }
+
+    const lateupdate=function(){
+      if(sessionStorage.getItem("firstupdate")==null){
+        sessionStorage.setItem("firstupdate","ok");
+        window.location.reload();
+      }
+    }
+
+    const forcelateupdate=function(){
+      sessionStorage.setItem("firstupdate","ok");
+        window.location.reload();
+    }
     
+    window.setTimeout(lateupdate,2000);
+    
+
+
     return (
      <div>
       <Grid container style={{padding:"20px"}} spacing={2} alignItems='center' justifyContent='center'>
@@ -116,33 +216,58 @@ const Neomenu = () => {
           <Grid item xs={12} style={{textAlign:"center"}}>
               <h1 >おすすめ</h1>
           </Grid>
-          
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"記録"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                {selectmenuname}を記録しますがよろしいですか？
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>いいえ</Button>
+              <Button onClick={okhandleClose} autoFocus>
+                はい
+              </Button>
+            </DialogActions>
+          </Dialog>
 
           
-            {array.map((shop,index) =>
-            <Grid item xs={6} md={4} key={index}>
+            {menulist["recommend"].map((menu,index) =>
+            <Grid item xs={6} md={4} key={menu.id+"rec"}>
 
-            <Card variant="outlined">
-              <CardContent style={{position:"relative"}}>
-              
-              <CardMedia
-                  
+              <Card variant="outlined" >
+              <CardContent style={{position:"relative"}}> 
+                <CardMedia
                   component="img"
-                  height="294"
-                  image="https://2.bp.blogspot.com/-8e0uXTq3_kY/VIhO71OvUrI/AAAAAAAApjs/J9lzC2aJE6c/s800/food_gyudon.png"
+                  height="194"
+                  image={"/"+menu.image_url}
                   alt="Paella dish"
                 />
-                <img style={checkbox} height="120px" src='https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2015/04/th_business_icon_ca_124.png?w=860&ssl=1'/>
+                
+                
                 <Typography variant="h5" component="div"  style={{textAlign:"center"}}>
-                  牛丼
+                  {menu.name}
                 </Typography>
                 <Typography variant="body2">
-                  well meaning and kindly.
-                  <br />
-                  {'"a benevolent smile"'}
+                  {menu.price} 円
+                  <br /> {menu.already ? "制覇済み":"未制覇"}
                 </Typography>
+                <Button variant="outlined" onClick={()=>handleClickOpen(menu.id,menu.name)}>
+            食べた
+          </Button>
               </CardContent>
+              {menu.already?
+                <img style={checkbox} height="120px" src='https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2015/04/th_business_icon_ca_124.png?w=860&ssl=1'/>
+                :""
               
+              }
               </Card>
 
             </Grid>
@@ -152,25 +277,34 @@ const Neomenu = () => {
               <h1 >すべての商品</h1>
           </Grid>
           
-          {array.map((shop,index) =>
-            <Grid item xs={6} md={4} key={index}>
+          {menulist["menues"].map((menu,index) =>
+            <Grid item xs={6} md={4} key={menu.id}>
 
             <Card variant="outlined" >
               <CardContent >
                 <CardMedia
                   component="img"
                   height="194"
-                  image="https://2.bp.blogspot.com/-8e0uXTq3_kY/VIhO71OvUrI/AAAAAAAApjs/J9lzC2aJE6c/s800/food_gyudon.png"
+                  image={"/"+menu.image_url}
                   alt="Paella dish"
                 />
+                 {menu.already?
+                <img style={checkbox} height="120px" src='https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2015/04/th_business_icon_ca_124.png?w=860&ssl=1'/>
+                :""
+              
+              }
                 <Typography variant="h5" component="div"  style={{textAlign:"center"}}>
-                  牛丼
+                  {menu.name}
                 </Typography>
                 <Typography variant="body2">
-                  well meaning and kindly.
+                  {menu.price} 円
                   <br />
-                  {'"a benevolent smile"'}
+                  <br /> <h2>{menu.already? "制覇済み":"未制覇"}</h2>
                 </Typography>
+                <Button variant="outlined" onClick={()=>handleClickOpen(menu.id,menu.name)}>
+            食べた
+          </Button>
+          
               </CardContent>
               
               </Card>
@@ -187,10 +321,21 @@ const Neomenu = () => {
         <Grid container alignItems='center' justifyContent='center'>
           <Grid item xs={4} style={{textAlign:"center"}}>
           <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/login">
+            <Link to="/shop">
               <CardContent>
               
-              <h1 >おすすめ</h1>
+              <h1 >店舗一覧</h1>
+             
+              </CardContent>
+              </Link>
+              </Card>
+          </Grid>
+          <Grid item xs={4} style={{textAlign:"center"}}>
+          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
+            <Link to="/menues">
+              <CardContent>
+              
+              <h1 >商品一覧</h1>
              
               </CardContent>
               </Link>
@@ -201,18 +346,7 @@ const Neomenu = () => {
             <Link to="/login">
               <CardContent>
               
-              <h1 >おすすめ</h1>
-             
-              </CardContent>
-              </Link>
-              </Card>
-          </Grid>
-          <Grid item xs={4} style={{textAlign:"center"}}>
-          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/login">
-              <CardContent>
-              
-              <h1 >おすすめ</h1>
+              <h1 >履歴</h1>
              
               </CardContent>
               </Link>

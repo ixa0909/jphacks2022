@@ -159,7 +159,7 @@ export default class Menus extends Component{
                   image="https://2.bp.blogspot.com/-8e0uXTq3_kY/VIhO71OvUrI/AAAAAAAApjs/J9lzC2aJE6c/s800/food_gyudon.png"
                   alt="Paella dish"
                 />
-                <img style={checkbox} height="120px" src='https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2015/04/th_business_icon_ca_124.png?w=860&ssl=1'/>
+                
                 <Typography variant="h5" component="div"  style={{textAlign:"center"}}>
                   牛丼
                 </Typography>
@@ -169,7 +169,7 @@ export default class Menus extends Component{
                   {'"a benevolent smile"'}
                 </Typography>
               </CardContent>
-              
+              <img style={checkbox} height="120px" src='https://i0.wp.com/sozaikoujou.com/wordpress/wp-content/uploads/2015/04/th_business_icon_ca_124.png?w=860&ssl=1'/>
               </Card>
 
             </Grid>

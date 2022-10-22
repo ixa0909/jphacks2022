@@ -17,6 +17,7 @@
     "react-scripts": "^2.1.3",
     "web-vitals": "^2.1.4"
   },
+  "homepage": "http://itoho.ddns.net/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

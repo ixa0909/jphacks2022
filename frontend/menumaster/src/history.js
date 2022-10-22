@@ -3,7 +3,7 @@ import axios from "axios";
 import {Button,Grid,Box,TextField,Card, Typography, CardContent, CardMedia,CardActions } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import { Link } from "react-router-dom";
-export default class Shops extends Component{
+export default class Menuhistory extends Component{
   constructor(props){
     super(props);
     let shoplistjson="";
@@ -12,7 +12,7 @@ export default class Shops extends Component{
       console.log(shoplistjson)
     }
     
-    
+
     
     this.state={
       userid:'',
@@ -45,39 +45,32 @@ export default class Shops extends Component{
       id:this.state.inputid
     }, () => {
       console.log(this.state.id);
+      this.handleSubmit();
   },() => {
     const navigate = useNavigate();
     navigate("/shop",);
   } )
    
   }
+//  POST ID
+  handleSubmit = function() {
+
+
+    const user = {
+      name: this.state.id
+    };
+
+    axios.post(`http://itoho.ddns.net/api/users`, { user })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  }
 
 
 
   render(){
     const {id}=this.state;
-
-    let regularDiv = {
-      textAlign: "center",
-      position: "fixed",
-      left: "0",
-      bottom: "20px",
-      height: "80px",
-      width: "100%",
-  }
-    let wrapperDiv = {
-      display: 'block',
-      padding: '20px',
-      height: '80px',
-      width: '100%',
-    }
-
-    let checkbox = {
-      position:"absolute",
-      top:"25px",
-      left:"25px"
-    }
-
 
     if (localStorage.getItem("userid")==null){
       return (
@@ -97,7 +90,7 @@ export default class Shops extends Component{
       );
     }
     sessionStorage.removeItem('menulist');
-    
+
     var {shoplist}=this.state;
     var array=Object.entries(shoplist).map(([key, value]) => ({key, value}))
     console.log(array)
@@ -147,55 +140,11 @@ export default class Shops extends Component{
             )}
           
 
-          <div style={{height: "200vh"}}>
-        <div style={wrapperDiv} />
-        <div style={regularDiv}>
-        <Grid container alignItems='center' justifyContent='center'>
-          <Grid item xs={4} style={{textAlign:"center"}}>
-          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/shop">
-              <CardContent>
-              
-              <h1 >店舗一覧</h1>
-             
-              </CardContent>
-              </Link>
-              </Card>
-          </Grid>
-          <Grid item xs={4} style={{textAlign:"center"}}>
-          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/menues">
-              <CardContent>
-              
-              <h1 >商品一覧</h1>
-             
-              </CardContent>
-              </Link>
-              </Card>
-          </Grid>
-          <Grid item xs={4} style={{textAlign:"center"}}>
-          <Card variant="outlined" style={{backgroundColor: "yellow"}}>
-            <Link to="/login">
-              <CardContent>
-              
-              <h1 >履歴</h1>
-             
-              </CardContent>
-              </Link>
-              </Card>
-          </Grid>
           
-        </Grid>
-
-        </div>
-      </div>
           
           
           
       </Grid>
-
-      
-      
   )
   }
 }

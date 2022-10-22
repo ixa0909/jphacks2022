@@ -39,24 +39,29 @@ export default class Login extends Component{
    
   }
 //  POST ID
-  handleSubmit = function() {
+  handleSubmit =async function() {
     
 
-    const user = {
-      name: this.state.id
-    };
 
-    axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
+     await axios.get(`http://itoho.ddns.net/api/stores`)
       .then(res => {
         console.log(res);
         console.log(res.data);
         sessionStorage.setItem('shoplist',JSON.stringify(res.data));
+        console.log("navigate");
+        this.setState({submitted: true});
+        
+      })
+     await axios.post(`http://itoho.ddns.net/api/login`,{user_id:this.state.id})
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
         localStorage.setItem('userid',this.state.id);
         console.log("navigate");
         this.setState({submitted: true});
-        window.location.href="/shop";
         
       })
+      window.location.href="/shop";
   }
 
 

@@ -11,6 +11,7 @@ import Menus from './menus';
 import Complete from './complete';
 import Complete2 from './complete2';
 import Neomenu from './meomenu';
+import Menuhistory from './history';
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +23,9 @@ function App() {
         <Route path={`/menu/`} element={<Neomenu />} />
         <Route path={`/complete/`} element={<Complete2 />} />
         <Route path={`/test/`} element={<Prounce />} />
+        <Route path={`/history`} element={<Menuhistory />} />
+        <Route path={`/`} element={<Login />} />
+        
         
       </Routes>
     </BrowserRouter>
