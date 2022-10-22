@@ -50,7 +50,7 @@ const Neomenu = () => {
       await axios.post("http://itoho.ddns.net/api/check_complete" ,{user_id:localStorage.getItem("userid"),store_id:query.get("shopid")})
         .then(res => {
           console.log(res.data);
-          if(res.data=="100%"){
+          if(res.data.complete=="100%"){
             window.setTimeout(forcelateupdate,2000);
             window.location.href="/complete";
           }
