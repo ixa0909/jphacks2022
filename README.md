@@ -85,7 +85,7 @@ http://itoho.ddns.net/login
 理由
 #### 2. 
 理由
-#### 3. データベース内のテーブルへのデータ挿入コード
-繰り返し操作はコード化することで効率化した。
-#### 4. Web スクレイピング
-理由: サンプルの外食店の料理のデータ収集に苦労した分工夫もしたため。
+#### 3. [データベース内のテーブルへのデータ挿入コード](https://github.com/jphacks/D_2212/tree/backend/backend/insert_to_table)
+繰り返し操作はコード化することで効率化しました。
+#### 4. [Web スクレイピング](https://github.com/jphacks/D_2212/blob/backend/backend/get_image_gyuudon.py)
+理由: サンプルの外食店の料理のデータ収集に苦労した分工夫もしたためです。
