@@ -5,6 +5,7 @@
 
 開発物 URL:
 http://itoho.ddns.net/login
+"user1" や "user2" や "user3" "user4" でログインできます
 
 概要動画 URL:https://www.youtube.com/watch?v=3Ncg21yXcYQ&ab_channel=ixa
 
