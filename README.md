@@ -8,6 +8,8 @@ http://itoho.ddns.net/login
 
 概要動画 URL:https://www.youtube.com/watch?v=3Ncg21yXcYQ&ab_channel=ixa
 
+### 字幕で解説しています！！！ONにしてください！
+
 
 ## 製品概要
 ### 背景(製品開発のきっかけ、課題等）
