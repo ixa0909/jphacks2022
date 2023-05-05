@@ -3,9 +3,9 @@
 <img src = ./imageForREADME/app.png style ="width:506pt;height:auto;"/>
 </p>
 
-開発物 URL:
+開発物 URL: 現在は無効です.
 http://itoho.ddns.net/login
-"user1" や "user2" や "user3" "user4" でログインできます
+"user1" や "user2" や "user3" "user4" でログインできます.
 
 概要動画 URL:https://www.youtube.com/watch?v=3Ncg21yXcYQ&ab_channel=ixa
 

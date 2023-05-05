@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
+# import
 import MySQLdb
 from dotenv import load_dotenv
 import os
 
-# データベースログインの PASS を取得
+# データベースログインのパラメータ
 load_dotenv(override=True)
 PASSWORD = os.getenv('DATABASE_PASSWORD')
 MYSQL_USER = os.getenv('MYSQL_USER')
@@ -19,11 +20,17 @@ connection = MySQLdb.connect(
     db=MYSQL_DB)
 cursor = connection.cursor()
 
-
+# 「user2」 が 店 ID「1」でメニュー「1 ~ 20」を注文したことを表すレコードを挿入
 user_id = "user2"
+store_id = "1"
+menu_ids = range(1, 21)
 
-for i in range(1,193,1):
-    cursor.execute("insert into order_history (user_id, menu_id,store_id) values (\'%s\',\'%s\',1)"%(user_id,str(i)))
+for i in menu_ids:
+    # SQL の命令文を実行
+    cursor.execute(
+        "insert into order_history (user_id, menu_id, store_id) values (\'%s\',\'%s\',\'%s\')" % (user_id, str(i), store_id))
+    # 処理を保存
     connection.commit()
 
+# データベースとの接続を終了
 connection.close()
