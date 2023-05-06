@@ -1,8 +1,12 @@
 # <u>Complete Menu!</u>
 
-<u>
-担当したのはバックエンドであり, <code>/backend</code> に別途 <code>README.md</code> を置いています.
-</u>
+</br>
+
+# 担当したのはバックエンドであり, <code>/backend</code> に別途 <code>README.md</code> を置いています.
+
+</br>
+</br>
+</br>
 
 <p align="center">
 <img src = ./imageForREADME/app.png style ="width:506pt;height:auto;"/>
