@@ -1,4 +1,9 @@
 # <u>Complete Menu!</u>
+
+<u>
+担当したのはバックエンドであり, <code>/backend</code> に別途 <code>README.md</code> を置いています.
+</u>
+
 <p align="center">
 <img src = ./imageForREADME/app.png style ="width:506pt;height:auto;"/>
 </p>
@@ -50,6 +55,7 @@ http://itoho.ddns.net/login
 
 ### 注力したこと（こだわり等）
 #### フロントエンド
+
 * 画面設計のデザイン
 
 機能も重要ですがデザインなくして Web アプリケーションは十二分に利用してもらえないと考えています。
@@ -58,9 +64,11 @@ http://itoho.ddns.net/login
 </p>
 
 #### バックエンド
+
 * データ構造
 
   データベースの構造を開発で考えるのは初めてだったので特に注力しました。ベースで間違えれば後で修正をするのは大変であると考え参考文献の調査、相談をした上で決定しました。
+
 <p align="center">
 <img src = ./imageForREADME/database.png style ="width:300pt;height:auto;"/>
 </p>

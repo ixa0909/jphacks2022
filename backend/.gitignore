@@ -1,0 +1,5 @@
+ignore_file
+image
+.env
+sample.*
+dump.txt
