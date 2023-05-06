@@ -36,6 +36,76 @@ backend
     python のモジュール一覧
 ```
 
+## 機能
+
+- <code>def CONNECT_DB_USER()</code>
+
+機能: ユーザーが新規であるかを判定
+
+PATH: /api/login
+
+method: POST
+
+key: user_id
+
+- <code>def get_stores()</code>
+
+機能: 店一覧を渡す
+
+PATH: /api/stores
+
+method: GET, POST
+
+GET の場合
+
+なし
+
+POST の場合
+
+user_id, store_id
+
+- <code>def menues()</code>
+
+機能: 店 ID に応じたメニュー一覧を返す
+
+PATH: /api/menues
+
+method: GET, POST
+
+key:
+
+GET の場合
+
+store_id, user_id
+
+POST の場合
+
+user_id, menu_id, store_id
+
+戻り値は 1 もしくは 0 で処理成功なら 1 そうでなければ 0
+
+- <code>def check_complete()</code>
+
+機能: 達成度を返す
+
+PATH: /api/check_complete
+
+method: POST
+
+key: user_id, store_id
+
+戻り値は 1 もしくは 0 で処理成功なら 1 そうでなければ 0
+
+- <code>def get_history()</code>
+
+機能: 注文履歴を返す
+
+PATH: /api/history
+
+method: GET
+
+key: user_id, store_id
+
 ## 苦労した点
 
 初めてすることが大量であり, 期間が短期間であったこと.
